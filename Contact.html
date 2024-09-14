@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Contact</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="Contact.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 6.16.5, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Contact">
+    <meta property="og:type" content="website">
+  
+    <style>
+      /* Styling the form fields */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px; /* Reduce space above form */
+      }
+
+      /* Full-width input for Name */
+      .form-row-full {
+        width: 70%;
+        margin-bottom: 15px;
+      }
+
+      .form-row-full input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 10px; /* Rounded corners */
+        box-sizing: border-box;
+      }
+
+      /* Flex container for phone and email to make them side by side */
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+        width: 70%;
+        margin-bottom: 15px;
+      }
+
+      /* Style for phone and email inputs */
+      .form-row input[type="tel"],
+      .form-row input[type="email"] {
+        width: 48%; /* Each input takes up 48% of the available space */
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 10px; /* Rounded corners */
+        box-sizing: border-box;
+      }
+
+      /* Style for message box */
+      textarea {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 10px; /* Rounded corners */
+        height: 150px; /* Adjust height for textarea */
+        margin-bottom: 15px;
+        box-sizing: border-box;
+      }
+
+      /* Style for the submit button */
+      input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #478ac9;
+        color: white;
+        border: none;
+        border-radius: 10px; /* Rounded corners */
+        cursor: pointer;
+      }
+
+      /* Hover effect for the submit button */
+      input[type="submit"]:hover {
+        background-color: #2f6ca9; /* Darker blue on hover */
+      }
+
+      /* Success message style */
+      .success-message {
+        display: none;
+        margin-top: 20px;
+        font-size: 18px;
+        color: green;
+      }
+    </style>
+</head>
+<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
+  <header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-b444">
+    <!-- Your header content -->
+  </header>
+
+  <section class="u-clearfix u-uploaded-video u-video u-video-cover u-section-1" id="sec-b44d">
+    <div class="u-background-video u-expanded" style="">
+      <div class="embed-responsive">
+        <video class="embed-responsive-item" data-autoplay="1" loop="" muted="1" autoplay="autoplay" playsinline="">
+          <source src="files/waves-6.webm" type="video/webm">
+          <p>Your browser does not support HTML5 video.</p>
+        </video>
+      </div>
+      <div class="u-video-shading"></div>
+    </div>
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <img class="u-image u-image-default u-image-1" src="images/contact.png" alt="" data-image-width="1420" data-image-height="802" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-delay="0">
+    </div>
+  </section>
+
+  <section class="u-align-center u-clearfix u-container-align-center u-custom-color-6 u-section-2" id="sec-afd3">
+    <div class="u-clearfix u-sheet u-sheet-1"></div>
+
+    <!-- Contact Form -->
+    <form id="contact-form">
+      
+      <!-- Full-width Name Input -->
+      <div class="form-row-full">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+      </div>
+
+      <!-- Side-by-side Phone and Email -->
+      <div class="form-row">
+        <input type="tel" id="phone" name="phone" placeholder="Your Phone" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+      </div>
+
+      <!-- Message Field -->
+      <textarea id="message" name="message" placeholder="Your Message" required></textarea><br>
+
+      <input type="submit" value="Send">
+    </form>
+
+    <!-- Success Message -->
+    <div class="success-message" id="success-message">
+      Thank you! Your message has been sent successfully.
+    </div>
+
+  </section>
+
+  <footer class="u-align-center u-clearfix u-container-align-center u-custom-color-6 u-footer u-footer" id="sec-816c">
+    <div class="u-clearfix u-sheet u-sheet-1"></div>
+  </footer>
+
+  <script>
+    // Handle form submission
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+
+      // Get form data
+      var formData = new FormData(this);
+
+      // Send form data via Fetch to Formspree
+      fetch('https://formspree.io/f/xzzpqazd', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(function(response) {
+        if (response.ok) {
+          // Hide the form and show success message
+          document.getElementById('contact-form').reset();
+          document.getElementById('success-message').style.display = 'block';
+        } else {
+          alert('There was an error sending the form. Please try again.');
+        }
+      }).catch(function(error) {
+        alert('There was an error sending the form. Please try again.');
+      });
+    });
+  </script>
+
+</body>
+</html>
