@@ -7,19 +7,11 @@
   <link rel="stylesheet" href="josh.css">
   <link rel="stylesheet" href="index.css">
   <style>
-    body {
-      margin: 0;
-      background-color: #fef3e2; /* Creme background */
-    }
-    .main-container {
-      width: 70%;
-      margin: 0 auto;
-      padding: 40px 0;
-    }
     .portfolio-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
+      padding: 40px;
     }
     .portfolio-item {
       overflow: hidden;
@@ -39,67 +31,15 @@
       font-family: 'Courier New', Courier, monospace;
       text-align: center;
       padding: 20px;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-    }
-    nav a {
-      color: #ffffff;
-      background-color: #478ac9;
-      padding: 8px 15px;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 4px;
-    }
-    nav a:hover {
-      background-color: #356b9b;
-    }
-    .hero {
-      position: relative;
-      height: 60vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fef3e2;
-      font-size: 6rem;
-      font-weight: bold;
-      font-family: 'Courier New', Courier, monospace;
-    }
-    .hero video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
+      background-color: #f0f0f0;
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <video autoplay muted loop playsinline>
-      <source src="files/waves-6.webm" type="video/webm">
-      Your browser does not support HTML5 video.
-    </video>
-    <nav>
-      <a href="./">HOME</a>
-      <a href="contact/">CONTACT</a>
-    </nav>
-    <div>JOSH</div>
-  </header>
-  <main class="main-container">
+  <header>
     <div class="portfolio-title">My Photography & Videography</div>
+  </header>
+  <main>
     <div id="photo-grid" class="portfolio-container"></div>
     <div id="video-grid" class="portfolio-container"></div>
   </main>
