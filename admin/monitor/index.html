@@ -1,24 +1,40 @@
 <!DOCTYPE html>
-<html>
-    
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>Live Stream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      width: 100vw; height: 100vh;
+      background: #000;
+      overflow: hidden;
+    }
+    /* fluid + aspectRatio keeps it responsive */
+    .video-js {
+      position: absolute !important;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;        /* scale to 80% of viewport width */
+      height: calc(80vw * 9 / 16) !important;  /* maintain 16:9 */
+      max-height: 80vh;   /* but never exceed 80% of viewport height */
+    }
+  </style>
 </head>
 <body>
   <video
-  id="live-video"
-  class="video-js vjs-default-skin"
-  controls
-  autoplay
-  width="640" height="360"
-  data-setup='{}'>
-  <source
-    src="http://5.198.49.76/hls/stream.m3u8"
-    type="application/x-mpegURL" />
-</video>
-
+    id="live-video"
+    class="video-js vjs-default-skin"
+    controls
+    autoplay
+    data-setup='{"fluid": true, "aspectRatio": "16:9"}'>
+    <source
+      src="https://admin.joshtr.com/hls/stream.m3u8"
+      type="application/x-mpegURL" />
+  </video>
 
   <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
 </body>
