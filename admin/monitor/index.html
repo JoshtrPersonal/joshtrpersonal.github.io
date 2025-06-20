@@ -7,34 +7,46 @@
   <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
 
   <style>
+    /* Make the page background and remove default margins */
     html, body {
-      margin: 0; padding: 0;
-      width: 70%; height: 70%;
+      margin: 0;
+      padding: 0;
       background: #494646;
+      height: 100vh;
+      width: 100vw;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    /* fluid + aspectRatio keeps it responsive */
-    .video-js {
-      position: absolute !important;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80vw;        /* scale to 80% of viewport width */
-      height: calc(80vw * 9 / 16) !important;  /* maintain 16:9 */
-      max-height: 80vh;   /* but never exceed 80% of viewport height */
+
+    /* Container that’s 80% of viewport width */
+    .video-container {
+      width: 80vw;
+      /* aspect-ratio is widely supported in modern browsers */
+      aspect-ratio: 16 / 9;
+    }
+
+    /* Let Video.js fill its container */
+    .video-container .video-js {
+      width: 100% !important;
+      height: 100% !important;
     }
   </style>
 </head>
 <body>
-  <video
-    id="live-video"
-    class="video-js vjs-default-skin"
-    controls
-    autoplay
-    data-setup='{"fluid": true, "aspectRatio": "16:9"}'>
-    <source
-      src="https://admin.joshtr.com/hls/stream.m3u8"
-      type="application/x-mpegURL" />
-  </video>
+  <div class="video-container">
+    <video
+      id="live-video"
+      class="video-js vjs-default-skin vjs-fluid"
+      controls
+      autoplay
+      data-setup='{"fluid": true, "aspectRatio": "16:9"}'>
+      <source
+        src="https://admin.joshtr.com/hls/stream.m3u8"
+        type="application/x-mpegURL" />
+    </video>
+  </div>
 
   <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
 </body>
