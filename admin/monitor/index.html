@@ -91,7 +91,8 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
   <script>
     const video = document.getElementById('live-video');
-    const videoSrc = 'https://admin.joshtr.com/hls/stream.m3u8';
+    const videoSrc = 'http://5.198.49.76:8080/hls/stream.m3u8';
+
 
     if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = videoSrc;
