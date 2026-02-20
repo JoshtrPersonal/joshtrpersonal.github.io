@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="index.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <script type="text/javascript" src="/image-protect.js" defer=""></script>
     <meta name="generator" content="Nicepage 6.16.5, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
@@ -96,9 +97,9 @@
     </section>
     <section class="u-clearfix u-custom-color-6 u-section-3" id="sec-710e">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-custom-font u-font-courier-new u-text u-text-default u-text-1">check out some of my projects / stores</p>
-        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-1" src="images/mcm1.png" alt="" data-image-width="200" data-image-height="224" data-href="https://mcmodels.net/vendors/114/novua" data-target="_blank">
-        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-2" src="images/spigot.png" alt="" data-image-width="882" data-image-height="728" data-href="https://www.spigotmc.org/members/supxnovattv.1320166/" data-target="_blank">
+        <a href="/portfolio" class="u-portfolio-link" aria-label="Open portfolio">
+          <img class="u-image u-image-contain u-image-default u-preserve-proportions u-portfolio-button" src="/images/portfoliobutton.png" alt="Portfolio" data-image-width="800" data-image-height="260">
+        </a>
       </div>
     </section>
     <section class="u-align-center u-clearfix u-container-align-center u-custom-color-6 u-section-4" id="sec-c0d6">
@@ -150,6 +151,8 @@
         const splash = document.getElementById('splash-screen');
         const enterBtn = document.getElementById('enter-site-btn');
         if (!lofiPlayer || !splash || !enterBtn) return;
+
+        lofiPlayer.volume = 0.2;
 
         const forcePlay = () => {
           if (!lofiPlayer.paused) return;

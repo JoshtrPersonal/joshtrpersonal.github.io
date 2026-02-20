@@ -288,3 +288,22 @@
     padding-right: 16px;
   }
 }
+
+/* Portfolio button section */
+.u-section-3 .u-sheet-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.u-section-3 .u-portfolio-link {
+  display: inline-block;
+  max-width: min(900px, 92vw);
+}
+
+.u-section-3 .u-portfolio-button {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  display: block;
+}

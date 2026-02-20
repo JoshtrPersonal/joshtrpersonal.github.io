@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Live Stream</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      background: #494646;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-container {
+      width: 80vw;
+      aspect-ratio: 16/9;
+    }
+    .video-container video {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+  <script type="text/javascript" src="/image-protect.js" defer=""></script>
+</head>
+<body>
+
+  <div class="video-container">
+    <video
+      id="live-video"
+      class="video-js vjs-default-skin vjs-fluid"
+      controls
+      autoplay
+      playsinline
+      crossorigin="anonymous"
+    ></video>
+  </div>
+
+  <!-- Video.js core -->
+  <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+  <!-- hls.js for browsers without native HLS -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+
+  <script>
+    const video = document.getElementById('live-video');
+    const videoSrc = 'https://admin.joshtr.com/hls/stream.m3u8';
+
+    // First try native HLS (Safari, some Android)
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+    }
+    // Otherwise use hls.js to polyfill via MSE
+    else if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+    }
+    // Initialize Video.js (optional, for skins & controls)
+    const player = videojs(video);
+  </script>
+</body>
+</html>

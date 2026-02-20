@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="index.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/josh.js" defer=""></script>
+    <script type="text/javascript" src="/image-protect.js" defer=""></script>
     <meta name="generator" content="Josh TR personal website">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
@@ -78,8 +79,8 @@
     <section class="u-clearfix u-custom-color-7 u-section-2" id="sec-f76a">
       <div class="u-clearfix u-sheet u-sheet-1">
         <img class="u-image u-image-circle u-image-1" src="images/josh.png" alt="" data-image-width="828" data-image-height="1472">
-        <p class="u-align-justify u-custom-font u-font-courier-new u-text u-text-1">My name is Josh, I'm from the UK and I am a creative worker, I take pride in my projects surrounding Minecraft: Java Edition. with topics such as:<br>
-          <br>- Minecraft Java plugins<br>- Custom 3D Models<br>- Pixelart<br>- Cinematics<br>- Breaking the boundaries of vanilla<br>- &amp; more
+        <p class="u-align-justify u-custom-font u-font-courier-new u-text u-text-1">My name is Josh, I'm from the UK and I am a creative worker, I often create many digital creations on many platforms such as:<br>
+          <br>- Social Media Management<br>- Videography<br>- Photography<br>- Video Editing &amp; Post production<br>- Paid Ads<br>- &amp; more
         </p>
         <div class="u-uploaded-video u-video u-video-contain u-video-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-direction="">
           <div class="embed-responsive">
@@ -89,16 +90,16 @@
             </video>
           </div>
         </div>
-        <p class="u-custom-font u-font-courier-new u-text u-text-2">I specialise in Minecraft plugin development, 3D asset creation, and pixel art. I build custom systems, tools, and visual assets that bring servers and ideas to life—combining clean code with strong visual design.<br>
-          <br>With many already successful products and projects such as AnimationsCore, Light The Night, and DirectorsCut.
+        <p class="u-custom-font u-font-courier-new u-text u-text-2">I create many different types of projects spanning from Java development for addons for games. 3D assets for other creators to create games with and even my own games and servers for users to play and for me to express my skill.<br>
+          <br>I currently focus on Low-Poly and Pixel-art-based works. Such as for game styles such as: Minecraft, Terraria, Stardew Valley etc.
         </p>
       </div>
     </section>
     <section class="u-clearfix u-custom-color-6 u-section-3" id="sec-710e">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-custom-font u-font-courier-new u-text u-text-default u-text-1">check out some of my projects / stores</p>
-        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-1" src="images/mcm1.png" alt="" data-image-width="200" data-image-height="224" data-href="https://mcmodels.net/vendors/114/novua" data-target="_blank">
-        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-2" src="images/spigot.png" alt="" data-image-width="882" data-image-height="728" data-href="https://www.spigotmc.org/members/supxnovattv.1320166/" data-target="_blank">
+        <a href="/portfolio" class="u-portfolio-link" aria-label="Open portfolio">
+          <img class="u-image u-image-contain u-image-default u-preserve-proportions u-portfolio-button" src="/images/portfoliobutton.png" alt="Portfolio" data-image-width="800" data-image-height="260">
+        </a>
       </div>
     </section>
     <section class="u-align-center u-clearfix u-container-align-center u-custom-color-6 u-section-4" id="sec-c0d6">
@@ -150,6 +151,8 @@
         const splash = document.getElementById('splash-screen');
         const enterBtn = document.getElementById('enter-site-btn');
         if (!lofiPlayer || !splash || !enterBtn) return;
+
+        lofiPlayer.volume = 0.2;
 
         const forcePlay = () => {
           if (!lofiPlayer.paused) return;
