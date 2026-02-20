@@ -4,90 +4,127 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="stylesheet" href="josh.css">
   <link rel="stylesheet" href="index.css">
-  <style>
-    .portfolio-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 40px;
-    }
-    .portfolio-item {
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
-    }
-    .portfolio-item:hover {
-      transform: scale(1.03);
-    }
-    .portfolio-item img, .portfolio-item video {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .portfolio-title {
-      font-family: 'Courier New', Courier, monospace;
-      text-align: center;
-      padding: 20px;
-      background-color: #f0f0f0;
-    }
-  </style>
+  <script type="text/javascript" src="/image-protect.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="portfolio-title">My Photography & Videography</div>
+  <header class="page-intro">
+    <h1>Portfolio</h1>
+    <p>Compact sections for lots of uploads. Each area has a full-width hero and a neat media grid for images and videos with short descriptions.</p>
   </header>
+
   <main>
-    <div id="photo-grid" class="portfolio-container"></div>
-    <div id="video-grid" class="portfolio-container"></div>
+    <section class="portfolio-section" aria-labelledby="minecraft-title">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/swan.jpg');">
+        <div class="hero-content">
+          <div class="hero-icon-slot">Hero icon slot</div>
+          <h2 id="minecraft-title" class="hero-title">Minecraft</h2>
+        </div>
+      </div>
+      <div class="section-grid">
+        <article class="media-card">
+          <img class="media-thumb" src="/portfolio/portfolio/flower.jpg" alt="Minecraft environment concept">
+          <div class="media-body"><h3>Environment Concept</h3><p>Natural scene composition and color pass for world-building mood.</p></div>
+        </article>
+        <article class="media-card">
+          <img class="media-thumb" src="/portfolio/portfolio/dog.jpg" alt="Minecraft character reference">
+          <div class="media-body"><h3>Character Reference</h3><p>Character styling board and expression direction for in-game identity.</p></div>
+        </article>
+        <article class="media-card">
+          <video class="media-thumb" controls preload="metadata" src="/portfolio/portfolio/monster_edit.mp4"></video>
+          <div class="media-body"><h3>Gameplay Montage</h3><p>Short gameplay cut showcasing pacing, lighting and key moments.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>New Upload Slot</h3><p>Reserved card for your next Minecraft media piece.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="portfolio-section" aria-labelledby="animationscore-title">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/bee_in_flight.jpg');">
+        <div class="hero-content">
+          <div class="hero-icon-slot">Hero icon slot</div>
+          <h2 id="animationscore-title" class="hero-title">AnimationsCore</h2>
+        </div>
+      </div>
+      <div class="section-grid">
+        <article class="media-card">
+          <img class="media-thumb" src="/portfolio/portfolio/bee_in_flight.jpg" alt="Animation keyframe study">
+          <div class="media-body"><h3>Keyframe Study</h3><p>Frame timing and silhouette checks used for smoother motion arcs.</p></div>
+        </article>
+        <article class="media-card">
+          <video class="media-thumb" controls preload="metadata" src="/files/vinyl.webm"></video>
+          <div class="media-body"><h3>Loop Preview</h3><p>Loop test clip for transition quality and seamless cycle playback.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>Animation Slot A</h3><p>Add another render, reel or WIP preview here.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>Animation Slot B</h3><p>Additional slot for clips, experiments, or showcase clips.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="portfolio-section" aria-labelledby="cubed-title">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/flower.jpg');">
+        <div class="hero-content">
+          <div class="hero-icon-slot">Hero icon slot</div>
+          <h2 id="cubed-title" class="hero-title">Cubed!</h2>
+        </div>
+      </div>
+      <div class="section-grid">
+        <article class="media-card">
+          <img class="media-thumb" src="/portfolio/portfolio/swan.jpg" alt="Cubed project style board">
+          <div class="media-body"><h3>Style Board</h3><p>Lighting and style direction references for cohesive visual tone.</p></div>
+        </article>
+        <article class="media-card">
+          <video class="media-thumb" controls preload="metadata" src="/files/waves-6.webm"></video>
+          <div class="media-body"><h3>Feature Clip</h3><p>Quick clip showing camera movement and scene transitions.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>Cubed Slot A</h3><p>Drop in additional work samples for this project.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>Cubed Slot B</h3><p>More room for updates without expanding page footprint too much.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="portfolio-section" aria-labelledby="mcmodels-title">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/dog.jpg');">
+        <div class="hero-content">
+          <div class="hero-icon-slot">Hero icon slot</div>
+          <h2 id="mcmodels-title" class="hero-title">MCModels.net</h2>
+        </div>
+      </div>
+      <div class="section-grid">
+        <article class="media-card">
+          <img class="media-thumb" src="/portfolio/portfolio/flower.jpg" alt="Marketplace product render">
+          <div class="media-body"><h3>Product Render</h3><p>Thumbnail-ready render for marketplace listing presentation.</p></div>
+        </article>
+        <article class="media-card">
+          <img class="media-thumb" src="/portfolio/portfolio/bee_in_flight.jpg" alt="Marketplace feature image">
+          <div class="media-body"><h3>Feature Highlight</h3><p>Highlight image showing texture and shape detail close-up.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>Listing Slot A</h3><p>Use this slot for another product demo image or trailer.</p></div>
+        </article>
+        <article class="media-card">
+          <div class="media-thumb slot">Image or video slot</div>
+          <div class="media-body"><h3>Listing Slot B</h3><p>Extra compact slot for additional portfolio variety.</p></div>
+        </article>
+      </div>
+    </section>
   </main>
-  <script>
-    const portfolioFolder = 'portfolio/';
-    const supportedPhotos = ['jpg', 'jpeg', 'png', 'gif'];
-    const supportedVideos = ['mp4', 'webm', 'ogg'];
-
-    async function loadPortfolio() {
-      try {
-        const response = await fetch(portfolioFolder);
-        const html = await response.text();
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-
-        const links = tempDiv.querySelectorAll('a');
-        links.forEach(link => {
-          const href = link.getAttribute('href');
-          const fileType = href.split('.').pop().toLowerCase();
-
-          if (supportedPhotos.includes(fileType)) {
-            addPhoto(href);
-          } else if (supportedVideos.includes(fileType)) {
-            addVideo(href);
-          }
-        });
-      } catch (err) {
-        console.error('Error loading portfolio:', err);
-      }
-    }
-
-    function addPhoto(src) {
-      const container = document.getElementById('photo-grid');
-      const div = document.createElement('div');
-      div.className = 'portfolio-item';
-      div.innerHTML = `<img src="${portfolioFolder + src}" alt="Photo">`;
-      container.appendChild(div);
-    }
-
-    function addVideo(src) {
-      const container = document.getElementById('video-grid');
-      const div = document.createElement('div');
-      div.className = 'portfolio-item';
-      div.innerHTML = `<video controls src="${portfolioFolder + src}"></video>`;
-      container.appendChild(div);
-    }
-
-    loadPortfolio();
-  </script>
 </body>
 </html>
