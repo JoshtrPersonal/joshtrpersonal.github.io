@@ -5,10 +5,14 @@
     <meta name="keywords" content="CONTACT ME">
     <meta name="description" content="">
     <title>Home</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="stylesheet" href="/josh.css" media="screen">
 <link rel="stylesheet" href="index.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/josh.js" defer=""></script>
+    <script type="text/javascript" src="/image-protect.js" defer=""></script>
     <meta name="generator" content="Josh TR personal website">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
@@ -26,7 +30,12 @@
     <meta property="og:title" content="Home">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-home-page="Home.html" data-home-page-title="Home" data-path-to-root="./" data-include-products="false" class="u-body u-overlap u-overlap-transparent u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-b444"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+  <body data-home-page="Home.html" data-home-page-title="Home" data-path-to-root="./" data-include-products="false" class="u-body u-overlap u-overlap-transparent u-xl-mode" data-lang="en"><div id="splash-screen" aria-label="Site entry overlay">
+    <div class="splash-content">
+      <p>Welcome</p>
+      <button id="enter-site-btn" type="button">Click to Enter</button>
+    </div>
+  </div><header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-b444"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <nav class="u-align-center u-menu u-menu-one-level u-offcanvas u-menu-1" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-delay="0">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px; text-transform: uppercase; font-weight: 500;">
             <a class="u-button-style u-custom-active-color u-custom-border u-custom-border-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
@@ -75,7 +84,7 @@
         </p>
         <div class="u-uploaded-video u-video u-video-contain u-video-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-direction="">
           <div class="embed-responsive">
-            <video class="embed-responsive-item" data-autoplay="1" loop="" muted="1" autoplay="autoplay" playsinline="">
+            <video id="vinyl-toggle" class="embed-responsive-item" data-autoplay="1" loop="" muted="1" autoplay="autoplay" playsinline="" title="Vinyl record" style="cursor: pointer;">
               <source src="files/vinyl.webm" type="video/webm">
               <p>Your browser does not support HTML5 video.</p>
             </video>
@@ -88,9 +97,9 @@
     </section>
     <section class="u-clearfix u-custom-color-6 u-section-3" id="sec-710e">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-custom-font u-font-courier-new u-text u-text-default u-text-1">check out some of my projects / stores</p>
-        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-1" src="images/mcm1.png" alt="" data-image-width="200" data-image-height="224" data-href="https://mcmodels.net/vendors/114/novua" data-target="_blank">
-        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-2" src="images/spigot.png" alt="" data-image-width="882" data-image-height="728" data-href="https://www.spigotmc.org/members/supxnovattv.1320166/" data-target="_blank">
+        <a href="/portfolio" class="u-portfolio-link" aria-label="Open portfolio">
+          <img class="u-image u-image-contain u-image-default u-preserve-proportions u-portfolio-button" src="/images/portfoliobutton.png" alt="Portfolio" data-image-width="800" data-image-height="260">
+        </a>
       </div>
     </section>
     <section class="u-align-center u-clearfix u-container-align-center u-custom-color-6 u-section-4" id="sec-c0d6">
@@ -102,5 +111,78 @@
     </section>
     
     
+    <audio id="lofi-player" loop preload="auto">
+      <source src="files/lofi.mp3" type="audio/mpeg">
+    </audio>
+    <style>
+      #splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: grid;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.94);
+        transition: opacity .35s ease, visibility .35s ease;
+      }
+      #splash-screen.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      #splash-screen .splash-content {
+        text-align: center;
+        color: #ffffff;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      #enter-site-btn {
+        margin-top: 14px;
+        padding: 14px 26px;
+        border: 2px solid #ffffff;
+        background: transparent;
+        color: #ffffff;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      (function () {
+        const lofiPlayer = document.getElementById('lofi-player');
+        const vinylToggle = document.getElementById('vinyl-toggle');
+        const splash = document.getElementById('splash-screen');
+        const enterBtn = document.getElementById('enter-site-btn');
+        if (!lofiPlayer || !splash || !enterBtn) return;
+
+        lofiPlayer.volume = 0.2;
+
+        const forcePlay = () => {
+          if (!lofiPlayer.paused) return;
+          const playPromise = lofiPlayer.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {});
+          }
+        };
+
+        enterBtn.addEventListener('click', () => {
+          forcePlay();
+          splash.classList.add('is-hidden');
+        });
+
+        if (vinylToggle) {
+          vinylToggle.addEventListener('click', forcePlay);
+        }
+
+        lofiPlayer.addEventListener('pause', () => {
+          if (splash.classList.contains('is-hidden')) {
+            forcePlay();
+          }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && splash.classList.contains('is-hidden')) {
+            forcePlay();
+          }
+        });
+      })();
+    </script>
   
 </body></html>
