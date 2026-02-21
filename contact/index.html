@@ -6,6 +6,9 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title>Contact</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="stylesheet" href="josh.css" media="screen">
     <link rel="stylesheet" href="Contact.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
@@ -95,11 +98,31 @@
         font-size: 18px;
         color: green;
       }
+      .site-nav {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        padding: 12px;
+      }
+      .site-nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+      }
+      .site-nav a.active, .site-nav a:hover {
+        background: rgba(255,255,255,0.2);
+      }
     </style>
+  <script type="text/javascript" src="/image-protect.js" defer=""></script>
 </head>
 <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
   <header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-b444">
-    <!-- Your header content -->
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/contact/" class="active">Contact</a>
+      <a href="/portfolio/">Portfolio</a>
+    </nav>
   </header>
 
   <section class="u-clearfix u-uploaded-video u-video u-video-cover u-section-1" id="sec-b44d">
