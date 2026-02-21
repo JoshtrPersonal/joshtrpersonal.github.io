@@ -12,8 +12,11 @@ body {
   color: var(--text);
 }
 .site-nav {
-  position: relative;
-  z-index: 20;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
   display: flex;
   gap: 16px;
   justify-content: center;
@@ -25,7 +28,7 @@ body {
 .site-nav a { color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 8px; }
 .site-nav a.active, .site-nav a:hover { background: rgba(103,181,255,0.22); }
 
-.top-video { position: relative; z-index: 30; width: 100%; height: 35vh; min-height: 220px; overflow: hidden; }
+.top-video { position: relative; z-index: 100; margin-top: 58px; width: 100%; height: 35vh; min-height: 220px; overflow: hidden; }
 .top-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .top-video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
 
