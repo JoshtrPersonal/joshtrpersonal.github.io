@@ -5,7 +5,7 @@
   --text-muted: #4a4a4a;
   --text-on-hero: #f5f7ff;
   --hero-title-shadow: 0 4px 16px rgba(0,0,0,0.8);
-  --top-video-height: 35vh;
+  --top-video-height: 50vh;
 }
 * { box-sizing: border-box; }
 body {
