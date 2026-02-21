@@ -12,6 +12,19 @@
   <script type="text/javascript" src="/image-protect.js" defer></script>
 </head>
 <body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="/">Home</a>
+    <a href="/contact/">Contact</a>
+    <a href="/portfolio/" class="active">Portfolio</a>
+  </nav>
+
+  <section class="top-video" aria-label="Portfolio intro video">
+    <video autoplay loop muted playsinline>
+      <source src="/files/waves-6.webm" type="video/webm">
+    </video>
+    <div class="top-video-overlay"></div>
+  </section>
+
   <header class="page-intro">
     <h1>Portfolio</h1>
     <p>Compact sections for lots of uploads. Each area has a full-width hero and a neat media grid for images and videos with short descriptions.</p>
@@ -19,110 +32,66 @@
 
   <main>
     <section class="portfolio-section" aria-labelledby="minecraft-title">
-      <div class="hero" style="--hero-image: url('/portfolio/portfolio/minecrafthero.png');">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/swan.jpg');">
         <div class="hero-content">
-          <div class="hero-icon-slot">Hero icon slot</div>
+          <img class="hero-icon-slot" src="/portfolio/portfolio/flower.jpg" alt="Minecraft section icon">
           <h2 id="minecraft-title" class="hero-title">Minecraft</h2>
         </div>
       </div>
+      <p class="section-lead">Minecraft-focused builds, visuals and gameplay showcases. Use this section for your modded scenes, maps, and project clips.</p>
       <div class="section-grid">
-        <article class="media-card">
-          <img class="media-thumb" src="/portfolio/portfolio/flower.jpg" alt="Minecraft environment concept">
-          <div class="media-body"><h3>Environment Concept</h3><p>Natural scene composition and color pass for world-building mood.</p></div>
-        </article>
-        <article class="media-card">
-          <img class="media-thumb" src="/portfolio/portfolio/dog.jpg" alt="Minecraft character reference">
-          <div class="media-body"><h3>Character Reference</h3><p>Character styling board and expression direction for in-game identity.</p></div>
-        </article>
-        <article class="media-card">
-          <video class="media-thumb" controls preload="metadata" src="/portfolio/portfolio/monster_edit.mp4"></video>
-          <div class="media-body"><h3>Gameplay Montage</h3><p>Short gameplay cut showcasing pacing, lighting and key moments.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>New Upload Slot</h3><p>Reserved card for your next Minecraft media piece.</p></div>
-        </article>
+        <article class="media-card"><img class="media-thumb" src="/portfolio/portfolio/flower.jpg" alt="Minecraft environment concept"><div class="media-body"><h3>Environment Concept</h3><p>Natural scene composition and color pass for world-building mood.</p></div></article>
+        <article class="media-card"><img class="media-thumb" src="/portfolio/portfolio/dog.jpg" alt="Minecraft character reference"><div class="media-body"><h3>Character Reference</h3><p>Character styling board and expression direction for in-game identity.</p></div></article>
+        <article class="media-card"><video class="media-thumb" controls preload="metadata" src="/portfolio/portfolio/monster_edit.mp4"></video><div class="media-body"><h3>Gameplay Montage</h3><p>Short gameplay cut showcasing pacing, lighting and key moments.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>New Upload Slot</h3><p>Reserved card for your next Minecraft media piece.</p></div></article>
       </div>
     </section>
 
     <section class="portfolio-section" aria-labelledby="animationscore-title">
-      <div class="hero" style="--hero-image: url('/portfolio/portfolio/animationscorehero.png');">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/bee_in_flight.jpg');">
         <div class="hero-content">
-          <div class="hero-icon-slot">Hero icon slot</div>
+          <img class="hero-icon-slot" src="/portfolio/portfolio/bee_in_flight.jpg" alt="AnimationsCore section icon">
           <h2 id="animationscore-title" class="hero-title">AnimationsCore</h2>
         </div>
       </div>
+      <p class="section-lead">Animation tests, timing studies, motion loops and showcase reels collected into a compact feed.</p>
       <div class="section-grid">
-        <article class="media-card">
-          <img class="media-thumb" src="/portfolio/portfolio/animationscorehero.png" alt="Animation keyframe study">
-          <div class="media-body"><h3>Keyframe Study</h3><p>Frame timing and silhouette checks used for smoother motion arcs.</p></div>
-        </article>
-        <article class="media-card">
-          <video class="media-thumb" controls preload="metadata" src="/files/vinyl.webm"></video>
-          <div class="media-body"><h3>Loop Preview</h3><p>Loop test clip for transition quality and seamless cycle playback.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>Animation Slot A</h3><p>Add another render, reel or WIP preview here.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>Animation Slot B</h3><p>Additional slot for clips, experiments, or showcase clips.</p></div>
-        </article>
+        <article class="media-card"><img class="media-thumb" src="/portfolio/portfolio/bee_in_flight.jpg" alt="Animation keyframe study"><div class="media-body"><h3>Keyframe Study</h3><p>Frame timing and silhouette checks used for smoother motion arcs.</p></div></article>
+        <article class="media-card"><video class="media-thumb" controls preload="metadata" src="/files/vinyl.webm"></video><div class="media-body"><h3>Loop Preview</h3><p>Loop test clip for transition quality and seamless cycle playback.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>Animation Slot A</h3><p>Add another render, reel or WIP preview here.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>Animation Slot B</h3><p>Additional slot for clips, experiments, or showcase clips.</p></div></article>
       </div>
     </section>
 
     <section class="portfolio-section" aria-labelledby="cubed-title">
-      <div class="hero" style="--hero-image: url('/portfolio/portfolio/cubedhero.jpg');">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/flower.jpg');">
         <div class="hero-content">
-          <div class="hero-icon-slot">Hero icon slot</div>
+          <img class="hero-icon-slot" src="/portfolio/portfolio/swan.jpg" alt="Cubed section icon">
           <h2 id="cubed-title" class="hero-title">Cubed!</h2>
         </div>
       </div>
+      <p class="section-lead">Cubed! highlights featuring style boards, feature clips and reserved slots for future drops.</p>
       <div class="section-grid">
-        <article class="media-card">
-          <img class="media-thumb" src="/portfolio/portfolio/animationscorehero.png" alt="Cubed project style board">
-          <div class="media-body"><h3>Style Board</h3><p>Lighting and style direction references for cohesive visual tone.</p></div>
-        </article>
-        <article class="media-card">
-          <video class="media-thumb" controls preload="metadata" src="/files/waves-6.webm"></video>
-          <div class="media-body"><h3>Feature Clip</h3><p>Quick clip showing camera movement and scene transitions.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>Cubed Slot A</h3><p>Drop in additional work samples for this project.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>Cubed Slot B</h3><p>More room for updates without expanding page footprint too much.</p></div>
-        </article>
+        <article class="media-card"><img class="media-thumb" src="/portfolio/portfolio/swan.jpg" alt="Cubed project style board"><div class="media-body"><h3>Style Board</h3><p>Lighting and style direction references for cohesive visual tone.</p></div></article>
+        <article class="media-card"><video class="media-thumb" controls preload="metadata" src="/files/waves-6.webm"></video><div class="media-body"><h3>Feature Clip</h3><p>Quick clip showing camera movement and scene transitions.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>Cubed Slot A</h3><p>Drop in additional work samples for this project.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>Cubed Slot B</h3><p>More room for updates without expanding page footprint too much.</p></div></article>
       </div>
     </section>
 
     <section class="portfolio-section" aria-labelledby="mcmodels-title">
-      <div class="hero" style="--hero-image: url('/portfolio/portfolio/mcmodelshero.jpg');">
+      <div class="hero" style="--hero-image: url('/portfolio/portfolio/dog.jpg');">
         <div class="hero-content">
-          <div class="hero-icon-slot">Hero icon slot</div>
+          <img class="hero-icon-slot" src="/portfolio/portfolio/dog.jpg" alt="MCModels.net section icon">
           <h2 id="mcmodels-title" class="hero-title">MCModels.net</h2>
         </div>
       </div>
+      <p class="section-lead">Marketplace-ready renders and listing visuals for MCModels.net with scalable slot-based cards.</p>
       <div class="section-grid">
-        <article class="media-card">
-          <img class="media-thumb" src="/portfolio/portfolio/flower.jpg" alt="Marketplace product render">
-          <div class="media-body"><h3>Product Render</h3><p>Thumbnail-ready render for marketplace listing presentation.</p></div>
-        </article>
-        <article class="media-card">
-          <img class="media-thumb" src="/portfolio/portfolio/bee_in_flight.jpg" alt="Marketplace feature image">
-          <div class="media-body"><h3>Feature Highlight</h3><p>Highlight image showing texture and shape detail close-up.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>Listing Slot A</h3><p>Use this slot for another product demo image or trailer.</p></div>
-        </article>
-        <article class="media-card">
-          <div class="media-thumb slot">Image or video slot</div>
-          <div class="media-body"><h3>Listing Slot B</h3><p>Extra compact slot for additional portfolio variety.</p></div>
-        </article>
+        <article class="media-card"><img class="media-thumb" src="/portfolio/portfolio/flower.jpg" alt="Marketplace product render"><div class="media-body"><h3>Product Render</h3><p>Thumbnail-ready render for marketplace listing presentation.</p></div></article>
+        <article class="media-card"><img class="media-thumb" src="/portfolio/portfolio/bee_in_flight.jpg" alt="Marketplace feature image"><div class="media-body"><h3>Feature Highlight</h3><p>Highlight image showing texture and shape detail close-up.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>Listing Slot A</h3><p>Use this slot for another product demo image or trailer.</p></div></article>
+        <article class="media-card"><div class="media-thumb slot">Image or video slot</div><div class="media-body"><h3>Listing Slot B</h3><p>Extra compact slot for additional portfolio variety.</p></div></article>
       </div>
     </section>
   </main>

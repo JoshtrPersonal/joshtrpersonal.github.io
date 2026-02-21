@@ -21,16 +21,33 @@
     }
     .video-container {
       width: 80vw;
+      margin-top: 46px;
       aspect-ratio: 16/9;
     }
     .video-container video {
       width: 100% !important;
       height: 100% !important;
     }
-  </style>
+      .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+    .top-nav a { color:#fff; text-decoration:none; padding:6px 10px; border-radius:6px; }
+    .top-nav a:hover, .top-nav a.active { background: rgba(255,255,255,0.2); }
+</style>
   <script type="text/javascript" src="/image-protect.js" defer=""></script>
 </head>
 <body>
+  <nav class="top-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/contact/">Contact</a><a href="/portfolio/">Portfolio</a></nav>
 
   <div class="video-container">
     <video
