@@ -33,7 +33,7 @@ body {
 
 .top-video { position: relative; z-index: 9998; margin-top: 58px; width: 100%; height: var(--top-video-height); min-height: 220px; overflow: hidden; }
 .top-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.top-video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
+.top-video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); }
 
 .page-intro { max-width: 1200px; margin: 0 auto; padding: 24px 20px 8px; text-align: center; }
 .page-intro h1 { margin: 0; font-size: clamp(1.5rem, 2.8vw, 2.5rem); }
