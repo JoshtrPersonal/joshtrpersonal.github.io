@@ -1205,8 +1205,8 @@ a {
   background-image: none;
   background-clip: padding-box;
   border-width: 0;
-  border-radius: 3px;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  border-radius: 1px;
+  transition: border-color ease-in-out 0.05s, box-shadow ease-in-out 0.05s;
   background-color: transparent;
   color: inherit;
   height: auto;
