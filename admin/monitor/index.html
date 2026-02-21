@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <title>3D Printer Live Monitor</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
 
@@ -32,6 +35,7 @@
       max-width: 960px;
       aspect-ratio: 16/9;
       margin-bottom: 1.5rem;
+      margin-top: 46px;
       border: 4px solid #333;
       border-radius: 12px;
       overflow: hidden;
@@ -59,9 +63,26 @@
     .buttons button:hover {
       background-color: #ff4d5b;
     }
-  </style>
+      .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+    .top-nav a { color:#fff; text-decoration:none; padding:6px 10px; border-radius:6px; }
+    .top-nav a:hover, .top-nav a.active { background: rgba(255,255,255,0.2); }
+</style>
+  <script type="text/javascript" src="/image-protect.js" defer=""></script>
 </head>
 <body>
+  <nav class="top-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/contact/">Contact</a><a href="/portfolio/">Portfolio</a></nav>
 
   <header>Live Monitor</header>
 
