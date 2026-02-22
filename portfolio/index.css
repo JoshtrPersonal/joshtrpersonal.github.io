@@ -42,8 +42,8 @@ body {
 
 .testimonials {
   max-width: 1100px;
-  margin: 16px auto 48px;
-  padding: 0 20px;
+  margin: 16px 20px 70px;
+  padding: 0 70px;
 }
 
 .testimonials h2 {
@@ -56,7 +56,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+  background: linear-gradient(180deg, #dbcdb6 0%, #dbcdb6 100%);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
   padding: 16px;
@@ -71,19 +71,19 @@ body {
   display: grid;
   place-items: center;
   font-size: 1.35rem;
-  background: rgba(103,181,255,0.2);
-  border: 1px solid rgba(103,181,255,0.45);
+  background: #f0e5d4;
+  border: 1px solid #ffffff;
 }
 
 .testimonial-content h3 {
   margin: 0;
-  color: #f5f7ff;
+  color: #000000;
   font-size: 1rem;
 }
 
 .testimonial-content p {
   margin: 8px 0 0;
-  color: #c7d1ea;
+  color: #000000;
   line-height: 1.45;
   font-size: 0.93rem;
 }
