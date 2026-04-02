@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dorian Album | Photo Share</title>
+  <meta name="description" content="Dorian party album with fast preview and one-click downloads." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090c13;
+      --bg-soft: #121825;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #eff4ff;
+      --muted: #a8b0c5;
+      --accent: #6ea8ff;
+      --accent-2: #7df0d6;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, #1b2f54 0%, transparent 40%),
+        radial-gradient(circle at 85% 0%, #1e3659 0%, transparent 35%),
+        linear-gradient(180deg, #070a11, #0c111d 45%, #090c13);
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1400px, 94vw);
+      margin: 0 auto;
+      padding: 2.3rem 0 3.5rem;
+    }
+
+    .hero {
+      display: grid;
+      gap: 1rem;
+      padding: 1.35rem;
+      background: linear-gradient(130deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 1rem;
+      z-index: 20;
+    }
+
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      letter-spacing: 0.02em;
+    }
+
+    .muted { color: var(--muted); margin: 0; }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .pill {
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.9rem;
+      color: #dbe5ff;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      color: #031127;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 0.68rem 1rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--card-border);
+      font-weight: 600;
+    }
+
+    .gallery {
+      margin-top: 1.1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.95rem;
+    }
+
+    .card {
+      margin: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: var(--bg-soft);
+      box-shadow: var(--shadow);
+      transition: transform .24s ease, border-color .24s ease;
+    }
+
+    .card:hover { transform: translateY(-4px); border-color: rgba(110,168,255,0.8); }
+
+    .card button { border: 0; padding: 0; width: 100%; background: transparent; cursor: zoom-in; }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #05070d;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem .65rem .7rem;
+    }
+
+    .caption {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #dee6ff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .download {
+      text-decoration: none;
+      color: var(--accent-2);
+      font-size: 0.8rem;
+      border: 1px solid rgba(125, 240, 214, 0.45);
+      border-radius: 10px;
+      padding: .28rem .5rem;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 17, 0.95);
+      z-index: 200;
+      display: none;
+      place-items: center;
+      padding: 1rem;
+    }
+
+    .lightbox.open { display: grid; }
+
+    .lightbox img {
+      max-width: min(1600px, 92vw);
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: #05070d;
+    }
+
+    .lightbox-bar {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: .6rem;
+    }
+
+    .lightbox-bar button,
+    .lightbox-bar a {
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: .55rem .75rem;
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
+      .hero { position: static; }
+      .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1 id="album-title">Dorian Party Album</h1>
+          <p class="muted" id="album-subtitle">A clean, high-volume photo drop for everyone.</p>
+        </div>
+        <div class="actions">
+          <a class="btn" id="download-all" href="#" download>⬇ Download Full Album</a>
+          <a class="btn secondary" href="/">← Back Home</a>
+        </div>
+      </div>
+      <div class="stats">
+        <span class="pill" id="photo-count">0 photos</span>
+        <span class="pill">Lazy loaded for faster browsing</span>
+        <span class="pill">Tap image for full preview</span>
+      </div>
+    </section>
+
+    <section class="gallery" id="gallery"></section>
+  </main>
+
+  <aside class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-bar">
+      <a id="lightbox-download" href="#" download>Download</a>
+      <button type="button" id="lightbox-close">Close ✕</button>
+    </div>
+    <img id="lightbox-image" alt="Expanded gallery image" />
+  </aside>
+
+  <script>
+    // Update galleries/albums/dorian/photos.json after uploading images.
+    const manifestPath = './photos.json';
+
+    const formatName = (fileName) => fileName
+      .replace(/\.[^/.]+$/, '')
+      .replace(/[\-_]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    const padNumber = (number, size) => String(number).padStart(size, '0');
+
+    const expandPattern = (pattern) => {
+      const photos = [];
+      const { prefix = '', start = 1, end = 1, pad = 1, ext = '.jpg' } = pattern;
+      for (let i = start; i <= end; i++) {
+        photos.push({ file: `${prefix}${padNumber(i, pad)}${ext}` });
+      }
+      return photos;
+    };
+
+    const renderGallery = (album) => {
+      const title = document.getElementById('album-title');
+      const subtitle = document.getElementById('album-subtitle');
+      const photoCount = document.getElementById('photo-count');
+      const gallery = document.getElementById('gallery');
+      const downloadAll = document.getElementById('download-all');
+
+      title.textContent = album.title || 'Dorian Party Album';
+      subtitle.textContent = album.subtitle || 'A clean, high-volume photo drop for everyone.';
+
+      const allPhotos = [
+        ...(album.photos || []),
+        ...((album.patterns || []).flatMap(expandPattern))
+      ];
+
+      photoCount.textContent = `${allPhotos.length.toLocaleString()} photos`;
+
+      downloadAll.href = album.downloadZip || '#';
+      downloadAll.style.pointerEvents = album.downloadZip ? 'auto' : 'none';
+      downloadAll.style.opacity = album.downloadZip ? '1' : '.5';
+
+      const base = album.imagesBasePath || './photos/';
+
+      const cards = allPhotos.map((item, index) => {
+        const src = `${base}${item.file}`;
+        const caption = item.caption || formatName(item.file) || `Photo ${index + 1}`;
+        return `
+          <figure class="card">
+            <button type="button" data-src="${src}" data-caption="${caption}">
+              <img src="${src}" alt="${caption}" loading="lazy" decoding="async" />
+            </button>
+            <figcaption class="meta">
+              <p class="caption" title="${caption}">${caption}</p>
+              <a class="download" href="${src}" download>Download</a>
+            </figcaption>
+          </figure>
+        `;
+      }).join('');
+
+      gallery.innerHTML = cards || '<p class="muted">No photos yet — upload files and update photos.json.</p>';
+
+      gallery.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-src]');
+        if (!button) return;
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxDownload = document.getElementById('lightbox-download');
+
+        const src = button.dataset.src;
+        const caption = button.dataset.caption || 'Photo';
+
+        lightboxImage.src = src;
+        lightboxImage.alt = caption;
+        lightboxDownload.href = src;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      }, { passive: true });
+    };
+
+    const closeLightbox = () => {
+      const lightbox = document.getElementById('lightbox');
+      if (!lightbox.classList.contains('open')) return;
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+    };
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox').addEventListener('click', (event) => {
+      if (event.target.id === 'lightbox') closeLightbox();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeLightbox();
+    });
+
+    fetch(manifestPath)
+      .then((response) => {
+        if (!response.ok) throw new Error('Unable to load manifest');
+        return response.json();
+      })
+      .then(renderGallery)
+      .catch(() => {
+        renderGallery({
+          title: 'Dorian Party Album',
+          subtitle: 'Could not load photos.json. Check your upload path and manifest.',
+          photos: []
+        });
+      });
+  </script>
+</body>
+</html>
