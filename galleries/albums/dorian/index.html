@@ -218,7 +218,7 @@
       <div class="hero-top">
         <div>
           <h1 id="album-title">Dorian Party Album</h1>
-          <p class="muted" id="album-subtitle">A clean, high-volume photo drop for everyone.</p>
+          <p class="muted" id="album-subtitle">Auto-loads every JPG found in the photos folder.</p>
         </div>
         <div class="actions">
           <a class="btn" id="download-all" href="#" download>⬇ Download Full Album</a>
@@ -244,7 +244,7 @@
   </aside>
 
   <script>
-    // Update galleries/albums/dorian/photos.json after uploading images.
+    // Optional album metadata config.
     const manifestPath = './photos.json';
 
     const formatName = (fileName) => fileName
@@ -253,15 +253,28 @@
       .replace(/\s+/g, ' ')
       .trim();
 
-    const padNumber = (number, size) => String(number).padStart(size, '0');
+    const discoverJpgFiles = async (basePath) => {
+      const response = await fetch(basePath, { headers: { Accept: 'text/html' } });
+      if (!response.ok) throw new Error('Unable to read photos directory');
 
-    const expandPattern = (pattern) => {
-      const photos = [];
-      const { prefix = '', start = 1, end = 1, pad = 1, ext = '.jpg' } = pattern;
-      for (let i = start; i <= end; i++) {
-        photos.push({ file: `${prefix}${padNumber(i, pad)}${ext}` });
-      }
-      return photos;
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const links = [...doc.querySelectorAll('a[href]')].map((a) => a.getAttribute('href') || '');
+
+      const files = links
+        .map((href) => {
+          try {
+            const url = new URL(href, `${location.origin}${basePath}`);
+            return decodeURIComponent(url.pathname.split('/').pop() || '');
+          } catch {
+            return '';
+          }
+        })
+        .filter((name) => /\.(jpg|jpeg)$/i.test(name))
+        .filter((name, index, arr) => name && arr.indexOf(name) === index)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+
+      return files.map((file) => ({ file }));
     };
 
     const renderGallery = (album) => {
@@ -274,12 +287,7 @@
       title.textContent = album.title || 'Dorian Party Album';
       subtitle.textContent = album.subtitle || 'A clean, high-volume photo drop for everyone.';
 
-      const allPhotos = [
-        ...(album.photos || []),
-        ...((album.patterns || []).flatMap(expandPattern))
-      ];
-
-      photoCount.textContent = `${allPhotos.length.toLocaleString()} photos`;
+      photoCount.textContent = `${(album.photos || []).length.toLocaleString()} photos`;
 
       downloadAll.href = album.downloadZip || '#';
       downloadAll.style.pointerEvents = album.downloadZip ? 'auto' : 'none';
@@ -287,7 +295,7 @@
 
       const base = album.imagesBasePath || './photos/';
 
-      const cards = allPhotos.map((item, index) => {
+      const cards = (album.photos || []).map((item, index) => {
         const src = `${base}${item.file}`;
         const caption = item.caption || formatName(item.file) || `Photo ${index + 1}`;
         return `
@@ -303,7 +311,7 @@
         `;
       }).join('');
 
-      gallery.innerHTML = cards || '<p class="muted">No photos yet — upload files and update photos.json.</p>';
+      gallery.innerHTML = cards || '<p class="muted">No JPG files found in /photos/ yet.</p>';
 
       gallery.addEventListener('click', (event) => {
         const button = event.target.closest('button[data-src]');
@@ -341,17 +349,26 @@
     });
 
     fetch(manifestPath)
-      .then((response) => {
-        if (!response.ok) throw new Error('Unable to load manifest');
-        return response.json();
-      })
-      .then(renderGallery)
-      .catch(() => {
-        renderGallery({
-          title: 'Dorian Party Album',
-          subtitle: 'Could not load photos.json. Check your upload path and manifest.',
-          photos: []
-        });
+      .then((response) => response.ok ? response.json() : {})
+      .catch(() => ({}))
+      .then(async (albumMeta) => {
+        const imagesBasePath = albumMeta.imagesBasePath || './photos/';
+        try {
+          const photos = await discoverJpgFiles(imagesBasePath);
+          renderGallery({
+            ...albumMeta,
+            imagesBasePath,
+            subtitle: albumMeta.subtitle || 'Auto-loaded from JPG files in the photos folder.',
+            photos
+          });
+        } catch {
+          renderGallery({
+            ...albumMeta,
+            imagesBasePath,
+            subtitle: 'Could not auto-list files from /photos/. Enable directory listing on host.',
+            photos: []
+          });
+        }
       });
   </script>
 </body>
