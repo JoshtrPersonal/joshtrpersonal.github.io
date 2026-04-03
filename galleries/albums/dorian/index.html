@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dorian Album</title>
+  <meta name="description" content="Choose between raw photos and final edited photos." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0911;
+      --bg-2: #161122;
+      --panel: rgba(255,255,255,0.06);
+      --panel-border: rgba(255,255,255,0.12);
+      --text: #f7f4ff;
+      --muted: #c8bddf;
+      --accent: #ff93c9;
+      --accent-2: #8ec5ff;
+      --accent-3: #ffd86f;
+      --shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,147,201,.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(142,197,255,.16), transparent 25%),
+        linear-gradient(180deg, #0b0812 0%, #120d1d 45%, #0b0911 100%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: min(1100px, 100%);
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #fff3fb;
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      line-height: .95;
+      letter-spacing: -.04em;
+    }
+
+    .sub {
+      margin: 14px auto 0;
+      max-width: 50rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      text-decoration: none;
+      color: inherit;
+      min-height: 340px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)),
+        linear-gradient(135deg, rgba(255,147,201,.12), rgba(142,197,255,.08));
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      display: flex;
+      align-items: end;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 28px 70px rgba(0,0,0,.48);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,216,111,.16), transparent 18%),
+        radial-gradient(circle at 82% 20%, rgba(142,197,255,.18), transparent 18%),
+        linear-gradient(180deg, transparent 30%, rgba(8,10,20,.72) 100%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 14px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+      letter-spacing: -.03em;
+    }
+
+    .card p {
+      margin: 10px 0 18px;
+      color: #ddd4ee;
+      line-height: 1.6;
+      max-width: 28rem;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: white;
+    }
+
+    @media (max-width: 780px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Dorian Album 31 / 03 / 2026</div>
+      <h1>Select a Gallery</h1>
+      <p class="sub">
+        Browse the untouched originals or jump straight to the final edited shots.
+      </p>
+    </section>
+
+    <section class="grid">
+      <a class="card" href="/raw/">
+        <div class="content">
+          <div class="tag">Originals</div>
+          <h2>Raw Photos</h2>
+          <p>See the full photo dump before editing, exactly as captured.</p>
+          <div class="cta">Open raw gallery →</div>
+        </div>
+      </a>
+
+      <a class="card" href="/edited/">
+        <div class="content">
+          <div class="tag">Finished</div>
+          <h2>Edited Photos</h2>
+          <p>View the final polished versions with the same gallery experience.</p>
+          <div class="cta">Open edited gallery →</div>
+        </div>
+      </a>
+    </section>
+  </main>
+</body>
+</html>
