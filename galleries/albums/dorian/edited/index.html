@@ -580,6 +580,8 @@
 
   <script>
   const manifestPath = './photos.json';
+  const MAX_CONCURRENT_LOADS = 4;
+  const PRELOAD_ROOT_MARGIN = '500px 0px';
 
   const formatName = (fileName) => fileName
     .replace(/\.[^/.]+$/, '')
@@ -637,24 +639,14 @@
     return files.map((file) => ({ file }));
   };
 
-  const imageExists = (src) => new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = src;
-  });
-
-  const filterExistingPhotos = async (basePath, photos) => {
-    const checks = await Promise.all(
-      photos.map(async (item) => {
-        const src = `${basePath}${item.file}`;
-        const exists = await imageExists(src);
-        return exists ? item : null;
-      })
-    );
-
-    return checks.filter(Boolean);
-  };
+  const escapeHtml = (value) =>
+    String(value).replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
 
   const renderGallery = (album) => {
     const title = document.getElementById('album-title');
@@ -676,23 +668,34 @@
     const cards = (album.photos || []).map((item, index) => {
       const src = `${base}${item.file}`;
       const caption = item.caption || formatName(item.file) || `Photo ${index + 1}`;
+      const safeCaption = escapeHtml(caption);
+      const safeSrc = escapeHtml(src);
+
       return `
         <figure class="card">
-          <button type="button" data-src="${src}" data-caption="${caption}" aria-label="Open ${caption}">
-            <img src="${src}" alt="${caption}" loading="lazy" decoding="async" />
+          <button type="button" data-src="${safeSrc}" data-caption="${safeCaption}" aria-label="Open ${safeCaption}">
+            <img
+              data-src="${safeSrc}"
+              alt="${safeCaption}"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="${index < 8 ? 'high' : 'low'}"
+            />
           </button>
           <figcaption class="meta">
             <div class="caption-wrap">
               <span class="caption-label">Photo ${index + 1}</span>
-              <p class="caption" title="${caption}">${caption}</p>
+              <p class="caption" title="${safeCaption}">${safeCaption}</p>
             </div>
-            <a class="download" href="${src}" download>Download</a>
+            <a class="download" href="${safeSrc}" download>Download</a>
           </figcaption>
         </figure>
       `;
     }).join('');
 
     gallery.innerHTML = cards || '<div class="empty"><p class="muted">No JPG files found in /photos/ yet.</p></div>';
+
+    setupProgressiveImageLoading(gallery);
   };
 
   const openLightbox = (src, caption) => {
@@ -715,6 +718,61 @@
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
   };
+
+  function setupProgressiveImageLoading(gallery) {
+    const images = [...gallery.querySelectorAll('img[data-src]')];
+    const queue = [];
+    let activeLoads = 0;
+
+    const pumpQueue = () => {
+      while (activeLoads < MAX_CONCURRENT_LOADS && queue.length > 0) {
+        const img = queue.shift();
+        if (!img || img.dataset.loadingStarted === 'true') continue;
+
+        img.dataset.loadingStarted = 'true';
+        activeLoads++;
+
+        const temp = new Image();
+        temp.decoding = 'async';
+
+        temp.onload = () => {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          activeLoads--;
+          pumpQueue();
+        };
+
+        temp.onerror = () => {
+          const card = img.closest('.card');
+          if (card) card.style.display = 'none';
+          activeLoads--;
+          pumpQueue();
+        };
+
+        temp.src = img.dataset.src;
+      }
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      images.forEach((img) => queue.push(img));
+      pumpQueue();
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        observer.unobserve(img);
+        queue.push(img);
+        pumpQueue();
+      });
+    }, {
+      rootMargin: PRELOAD_ROOT_MARGIN
+    });
+
+    images.forEach((img) => observer.observe(img));
+  }
 
   document.getElementById('gallery').addEventListener('click', (event) => {
     const button = event.target.closest('button[data-src]');
@@ -739,20 +797,17 @@
       const manifestPhotos = buildManifestPhotos(albumMeta);
 
       if (manifestPhotos.length > 0) {
-        const verifiedPhotos = await filterExistingPhotos(imagesBasePath, manifestPhotos);
-
         renderGallery({
           ...albumMeta,
           imagesBasePath,
           subtitle: albumMeta.subtitle || 'Loaded from photos.json (best for static websites).',
-          photos: verifiedPhotos
+          photos: manifestPhotos
         });
         return;
       }
 
       try {
         const photos = await discoverJpgFiles(imagesBasePath);
-
         renderGallery({
           ...albumMeta,
           imagesBasePath,
@@ -768,6 +823,6 @@
         });
       }
     });
-  </script>
+</script>
 </body>
 </html>
