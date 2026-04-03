@@ -586,171 +586,195 @@
   </aside>
 
   <script>
-    const manifestPath = './photos.json';
+  const manifestPath = './photos.json';
 
-    const formatName = (fileName) => fileName
-      .replace(/\.[^/.]+$/, '')
-      .replace(/[\-_]+/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
+  const formatName = (fileName) => fileName
+    .replace(/\.[^/.]+$/, '')
+    .replace(/[\-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 
-    const padNumber = (number, size) => String(number).padStart(size, '0');
+  const padNumber = (number, size) => String(number).padStart(size, '0');
 
-    const expandPattern = (pattern) => {
-      const photos = [];
-      const { prefix = '', start = 1, end = 1, pad = 1, ext = '.jpg', captionPrefix = '' } = pattern;
-      for (let i = start; i <= end; i++) {
-        const file = `${prefix}${padNumber(i, pad)}${ext}`;
-        photos.push({ file, caption: captionPrefix ? `${captionPrefix} ${i}` : undefined });
-      }
-      return photos;
-    };
+  const expandPattern = (pattern) => {
+    const photos = [];
+    const { prefix = '', start = 1, end = 1, pad = 1, ext = '.jpg', captionPrefix = '' } = pattern;
+    for (let i = start; i <= end; i++) {
+      const file = `${prefix}${padNumber(i, pad)}${ext}`;
+      photos.push({ file, caption: captionPrefix ? `${captionPrefix} ${i}` : undefined });
+    }
+    return photos;
+  };
 
-    const buildManifestPhotos = (albumMeta) => {
-      const explicit = Array.isArray(albumMeta.photos) ? albumMeta.photos : [];
-      const patterns = Array.isArray(albumMeta.patterns) ? albumMeta.patterns.flatMap(expandPattern) : [];
-      const dedup = new Map();
-      [...explicit, ...patterns].forEach((item) => {
-        if (!item || !item.file) return;
-        const key = String(item.file).toLowerCase();
-        if (!dedup.has(key)) dedup.set(key, item);
-      });
-      return [...dedup.values()];
-    };
+  const buildManifestPhotos = (albumMeta) => {
+    const explicit = Array.isArray(albumMeta.photos) ? albumMeta.photos : [];
+    const patterns = Array.isArray(albumMeta.patterns) ? albumMeta.patterns.flatMap(expandPattern) : [];
+    const dedup = new Map();
 
-    const discoverJpgFiles = async (basePath) => {
-      const response = await fetch(basePath, { headers: { Accept: 'text/html' } });
-      if (!response.ok) throw new Error('Unable to read photos directory');
-
-      const html = await response.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const links = [...doc.querySelectorAll('a[href]')].map((a) => a.getAttribute('href') || '');
-
-      const files = links
-        .map((href) => {
-          try {
-            const url = new URL(href, window.location.href);
-            return decodeURIComponent(url.pathname.split('/').pop() || '');
-          } catch {
-            return '';
-          }
-        })
-        .filter((name) => /\.(jpg|jpeg)$/i.test(name))
-        .filter((name, index, arr) => name && arr.indexOf(name) === index)
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-
-      return files.map((file) => ({ file }));
-    };
-
-    const renderGallery = (album) => {
-      const title = document.getElementById('album-title');
-      const subtitle = document.getElementById('album-subtitle');
-      const photoCount = document.getElementById('photo-count');
-      const gallery = document.getElementById('gallery');
-      const downloadAll = document.getElementById('download-all');
-
-      title.textContent = album.title || 'Dorian Party Album';
-      subtitle.textContent = album.subtitle || 'A clean, high-volume photo drop for everyone.';
-      photoCount.textContent = `${(album.photos || []).length.toLocaleString()} photos`;
-
-      downloadAll.href = album.downloadZip || '#';
-      downloadAll.style.pointerEvents = album.downloadZip ? 'auto' : 'none';
-      downloadAll.style.opacity = album.downloadZip ? '1' : '.55';
-
-      const base = album.imagesBasePath || './photos/';
-
-      const cards = (album.photos || []).map((item, index) => {
-        const src = `${base}${item.file}`;
-        const caption = item.caption || formatName(item.file) || `Photo ${index + 1}`;
-        return `
-          <figure class="card">
-            <button type="button" data-src="${src}" data-caption="${caption}" aria-label="Open ${caption}">
-              <img src="${src}" alt="${caption}" loading="lazy" decoding="async" />
-            </button>
-            <figcaption class="meta">
-              <div class="caption-wrap">
-                <span class="caption-label">Photo ${index + 1}</span>
-                <p class="caption" title="${caption}">${caption}</p>
-              </div>
-              <a class="download" href="${src}" download>Download</a>
-            </figcaption>
-          </figure>
-        `;
-      }).join('');
-
-      gallery.innerHTML = cards || '<div class="empty"><p class="muted">No JPG files found in /photos/ yet.</p></div>';
-    };
-
-    const openLightbox = (src, caption) => {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImage = document.getElementById('lightbox-image');
-      const lightboxDownload = document.getElementById('lightbox-download');
-      const lightboxCaption = document.getElementById('lightbox-caption');
-
-      lightboxImage.src = src;
-      lightboxImage.alt = caption;
-      lightboxDownload.href = src;
-      lightboxCaption.textContent = caption;
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
-    };
-
-    const closeLightbox = () => {
-      const lightbox = document.getElementById('lightbox');
-      if (!lightbox.classList.contains('open')) return;
-      lightbox.classList.remove('open');
-      lightbox.setAttribute('aria-hidden', 'true');
-    };
-
-    document.getElementById('gallery').addEventListener('click', (event) => {
-      const button = event.target.closest('button[data-src]');
-      if (!button) return;
-      openLightbox(button.dataset.src, button.dataset.caption || 'Photo');
+    [...explicit, ...patterns].forEach((item) => {
+      if (!item || !item.file) return;
+      const key = String(item.file).toLowerCase();
+      if (!dedup.has(key)) dedup.set(key, item);
     });
 
-    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-    document.getElementById('lightbox').addEventListener('click', (event) => {
-      if (event.target.id === 'lightbox') closeLightbox();
-    });
+    return [...dedup.values()];
+  };
 
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLightbox();
-    });
+  const discoverJpgFiles = async (basePath) => {
+    const response = await fetch(basePath, { headers: { Accept: 'text/html' } });
+    if (!response.ok) throw new Error('Unable to read photos directory');
 
-    fetch(manifestPath)
-      .then((response) => response.ok ? response.json() : {})
-      .catch(() => ({}))
-      .then(async (albumMeta) => {
-        const imagesBasePath = albumMeta.imagesBasePath || './photos/';
-        const manifestPhotos = buildManifestPhotos(albumMeta);
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const links = [...doc.querySelectorAll('a[href]')].map((a) => a.getAttribute('href') || '');
 
-        if (manifestPhotos.length > 0) {
-          renderGallery({
-            ...albumMeta,
-            imagesBasePath,
-            subtitle: albumMeta.subtitle || 'Loaded from photos.json (best for static websites).',
-            photos: manifestPhotos
-          });
-          return;
-        }
-
+    const files = links
+      .map((href) => {
         try {
-          const photos = await discoverJpgFiles(imagesBasePath);
-          renderGallery({
-            ...albumMeta,
-            imagesBasePath,
-            subtitle: albumMeta.subtitle || 'Auto-loaded from JPG files in the photos folder.',
-            photos
-          });
+          const url = new URL(href, window.location.href);
+          return decodeURIComponent(url.pathname.split('/').pop() || '');
         } catch {
-          renderGallery({
-            ...albumMeta,
-            imagesBasePath,
-            subtitle: 'No manifest entries found, and auto-discovery is unavailable on this host. Add photos/patterns in photos.json.',
-            photos: []
-          });
+          return '';
         }
-      });
+      })
+      .filter((name) => /\.(jpg|jpeg)$/i.test(name))
+      .filter((name, index, arr) => name && arr.indexOf(name) === index)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+
+    return files.map((file) => ({ file }));
+  };
+
+  const imageExists = (src) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = src;
+  });
+
+  const filterExistingPhotos = async (basePath, photos) => {
+    const checks = await Promise.all(
+      photos.map(async (item) => {
+        const src = `${basePath}${item.file}`;
+        const exists = await imageExists(src);
+        return exists ? item : null;
+      })
+    );
+
+    return checks.filter(Boolean);
+  };
+
+  const renderGallery = (album) => {
+    const title = document.getElementById('album-title');
+    const subtitle = document.getElementById('album-subtitle');
+    const photoCount = document.getElementById('photo-count');
+    const gallery = document.getElementById('gallery');
+    const downloadAll = document.getElementById('download-all');
+
+    title.textContent = album.title || 'Dorian Party Album';
+    subtitle.textContent = album.subtitle || 'A clean, high-volume photo drop for everyone.';
+    photoCount.textContent = `${(album.photos || []).length.toLocaleString()} photos`;
+
+    downloadAll.href = album.downloadZip || '#';
+    downloadAll.style.pointerEvents = album.downloadZip ? 'auto' : 'none';
+    downloadAll.style.opacity = album.downloadZip ? '1' : '.55';
+
+    const base = album.imagesBasePath || './photos/';
+
+    const cards = (album.photos || []).map((item, index) => {
+      const src = `${base}${item.file}`;
+      const caption = item.caption || formatName(item.file) || `Photo ${index + 1}`;
+      return `
+        <figure class="card">
+          <button type="button" data-src="${src}" data-caption="${caption}" aria-label="Open ${caption}">
+            <img src="${src}" alt="${caption}" loading="lazy" decoding="async" />
+          </button>
+          <figcaption class="meta">
+            <div class="caption-wrap">
+              <span class="caption-label">Photo ${index + 1}</span>
+              <p class="caption" title="${caption}">${caption}</p>
+            </div>
+            <a class="download" href="${src}" download>Download</a>
+          </figcaption>
+        </figure>
+      `;
+    }).join('');
+
+    gallery.innerHTML = cards || '<div class="empty"><p class="muted">No JPG files found in /photos/ yet.</p></div>';
+  };
+
+  const openLightbox = (src, caption) => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxDownload = document.getElementById('lightbox-download');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    lightboxImage.src = src;
+    lightboxImage.alt = caption;
+    lightboxDownload.href = src;
+    lightboxCaption.textContent = caption;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+  };
+
+  const closeLightbox = () => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('open')) return;
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+  };
+
+  document.getElementById('gallery').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-src]');
+    if (!button) return;
+    openLightbox(button.dataset.src, button.dataset.caption || 'Photo');
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', (event) => {
+    if (event.target.id === 'lightbox') closeLightbox();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLightbox();
+  });
+
+  fetch(manifestPath)
+    .then((response) => response.ok ? response.json() : {})
+    .catch(() => ({}))
+    .then(async (albumMeta) => {
+      const imagesBasePath = albumMeta.imagesBasePath || './photos/';
+      const manifestPhotos = buildManifestPhotos(albumMeta);
+
+      if (manifestPhotos.length > 0) {
+        const verifiedPhotos = await filterExistingPhotos(imagesBasePath, manifestPhotos);
+
+        renderGallery({
+          ...albumMeta,
+          imagesBasePath,
+          subtitle: albumMeta.subtitle || 'Loaded from photos.json (best for static websites).',
+          photos: verifiedPhotos
+        });
+        return;
+      }
+
+      try {
+        const photos = await discoverJpgFiles(imagesBasePath);
+
+        renderGallery({
+          ...albumMeta,
+          imagesBasePath,
+          subtitle: albumMeta.subtitle || 'Auto-loaded from JPG files in the photos folder.',
+          photos
+        });
+      } catch {
+        renderGallery({
+          ...albumMeta,
+          imagesBasePath,
+          subtitle: 'No manifest entries found, and auto-discovery is unavailable on this host. Add photos/patterns in photos.json.',
+          photos: []
+        });
+      }
+    });
   </script>
 </body>
 </html>
