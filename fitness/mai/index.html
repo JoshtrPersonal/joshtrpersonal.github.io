@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Body Goal Plan</title>
+  <style>
+    :root {
+      --bg: #f7f2f6;
+      --bg2: #fffafc;
+      --card: #fffdfd;
+      --ink: #3d3138;
+      --muted: #7d6973;
+      --accent: #dcaec3;
+      --accent2: #f1d6e1;
+      --accent3: #eadff8;
+      --line: #ead6df;
+      --shadow: 0 12px 30px rgba(90, 58, 74, 0.10);
+      --polaroid-shadow: 0 12px 25px rgba(63, 36, 50, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff8fb 0%, #f7f2f6 40%, #f2edf3 100%);
+      line-height: 1.55;
+    }
+
+    .container {
+      width: min(1150px, 92%);
+      margin: 40px auto 80px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fff8fb, #f5ecf8);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 34px 30px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "✿";
+      position: absolute;
+      font-size: 64px;
+      color: rgba(220, 174, 195, 0.18);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      top: 14px;
+      right: 20px;
+    }
+
+    .hero::after {
+      bottom: 12px;
+      left: 20px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 850px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .section {
+      margin-top: 28px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-title .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      border: 1px solid rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 24px;
+    }
+
+    .polaroid {
+      background: white;
+      border-radius: 8px;
+      padding: 14px 14px 22px;
+      box-shadow: var(--polaroid-shadow);
+      border: 1px solid #f0e3ea;
+      transform: rotate(-1.5deg);
+      transition: transform 0.2s ease;
+    }
+
+    .polaroid:nth-child(even) {
+      transform: rotate(1.4deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) translateY(-2px);
+    }
+
+    .photo-box {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 4px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, #f9eef3, #f4f0fb);
+      border: 1px dashed #d9c0cb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8b7481;
+      text-align: center;
+      padding: 12px;
+      font-size: 0.95rem;
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .twocol {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .mini-card {
+      background: linear-gradient(180deg, var(--bg2), #fff);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .mini-card h3 {
+      font-size: 1.02rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .list li {
+      margin-bottom: 8px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      background: linear-gradient(180deg, #fff, #fff9fc);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--accent);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+    }
+
+    .timeline-item h3 {
+      margin-bottom: 8px;
+    }
+
+    .timeline-item small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .plan-card {
+      background: linear-gradient(180deg, #fff, #fff9fc);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .plan-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .metric-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+    }
+
+    .tracker {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid #f1e4eb;
+      font-size: 0.95rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #fff3f8;
+      color: #5d4c55;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .check {
+      font-size: 1.1rem;
+      color: #8b6a79;
+    }
+
+    .quote-box {
+      background: linear-gradient(135deg, #fff5fa, #f7effb);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      font-size: 1rem;
+      color: #57444d;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 28px;
+      font-size: 0.93rem;
+    }
+
+    .small {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 860px) {
+      .twocol {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <section class="hero">
+      <h1>Your Glow-Up Plan ♡</h1>
+      <p class="subtitle">
+        A real, structured plan for getting closer to the body shape you want:
+        a smaller waist, flatter lower stomach, less side/lower-back softness,
+        and more glute/hip shape — without crash dieting or guessing.
+      </p>
+
+      <div class="tag-row">
+        <div class="tag">Goal: closer to photo 2 + photo 4</div>
+        <div class="tag">Approach: cut + recomp</div>
+        <div class="tag">Timeline: 3–6 months for visible change</div>
+        <div class="tag">Focus: waist, stomach, glutes, posture</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Before & Goal Photos</h2>
+      </div>
+
+      <div class="photo-grid">
+        <div class="polaroid">
+          <div class="photo-box">
+            <!-- Replace with image -->
+            <!-- Example: <img src="before-front.jpg" alt="Before Front"> -->
+            BEFORE FRONT
+          </div>
+          <div class="caption">Before — Front</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-box">
+            <!-- Example: <img src="before-side.jpg" alt="Before Side"> -->
+            BEFORE SIDE
+          </div>
+          <div class="caption">Before — Side</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-box">
+            <!-- Example: <img src="before-back.jpg" alt="Before Back"> -->
+            BEFORE BACK
+          </div>
+          <div class="caption">Before — Back</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-box">
+            <!-- Example: <img src="goal-2.jpg" alt="Goal Photo 2"> -->
+            GOAL PHOTO 2
+          </div>
+          <div class="caption">Goal — Photo 2</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="photo-box">
+            <!-- Example: <img src="goal-4.jpg" alt="Goal Photo 4"> -->
+            GOAL PHOTO 4
+          </div>
+          <div class="caption">Goal — Photo 4</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>What’s Actually Going On</h2>
+      </div>
+
+      <div class="cards">
+        <div class="mini-card">
+          <h3>1) It’s more body composition than body weight</h3>
+          <p>
+            At this height and weight, the issue is not “huge weight.”
+            The bigger factor is where fat is stored and how much muscle shape is underneath.
+            Right now the body reads softer rather than shaped.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>2) The lower stomach/waist area is the main gap</h3>
+          <p>
+            The biggest difference between the current look and the goal look is:
+            less lower stomach fullness, less waist/lower-back softness,
+            and a cleaner waist-to-hip transition.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>3) Posture matters</h3>
+          <p>
+            A relaxed core and posture can make the stomach project more from the side.
+            Core, glutes, back work, and standing posture can improve this a lot.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>4) The goal photos are real, but also posed</h3>
+          <p>
+            Low-rise clothing, twisting, angles, sucking in, lighting, and styling all help.
+            So the goal is realistic to move toward — but those exact photos are also aesthetic presentation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Honest Summary</h2>
+      </div>
+
+      <div class="quote-box">
+        <strong>The blunt version:</strong><br><br>
+        To get closer to the look in goal photo 2 and goal photo 4, the body likely needs:
+        <ul class="list">
+          <li>a smaller waist,</li>
+          <li>a flatter lower stomach,</li>
+          <li>less fat around the lower back / sides,</li>
+          <li>more glute and hip shape,</li>
+          <li>better posture and tighter core control.</li>
+        </ul>
+        This is most likely a <strong>6-month cut/recomp</strong>, not a “go gym casually and hope” situation.
+        It also does <strong>not</strong> need starvation. The best result comes from losing fat slowly while building shape.
+      </div>
+
+      <div class="metric-boxes">
+        <div class="metric">
+          <strong>65kg</strong>
+          Current starting point
+        </div>
+        <div class="metric">
+          <strong>58–61kg</strong>
+          Likely best range for the goal look
+        </div>
+        <div class="metric">
+          <strong>100g/day</strong>
+          Protein target
+        </div>
+        <div class="metric">
+          <strong>3x/week</strong>
+          Minimum gym consistency
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Timeline</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Phase 1 — Weeks 1 to 4</h3>
+          <small>Goal: reduce bloating, create routine, start fat loss</small>
+          <ul class="list">
+            <li>Calories: <strong>1,750–1,900/day</strong></li>
+            <li>Protein: <strong>90–110g/day</strong></li>
+            <li>Steps: <strong>7k–10k/day</strong></li>
+            <li>Gym: <strong>3 sessions/week</strong></li>
+            <li>Expected result: less bloating, slightly tighter waist, better posture, 1–2kg down</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 2 — Weeks 5 to 12</h3>
+          <small>Goal: visible waist and stomach change</small>
+          <ul class="list">
+            <li>Calories: <strong>1,600–1,800/day</strong></li>
+            <li>Protein: <strong>100g/day</strong></li>
+            <li>Steps: <strong>8k–10k/day</strong></li>
+            <li>Keep increasing gym weights or reps slowly</li>
+            <li>Expected result: 3–5kg down total, smaller waist, reduced belly bump, cleaner back/side line</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Phase 3 — Months 4 to 6</h3>
+          <small>Goal: shaping phase — closest to goal photo 2 and 4</small>
+          <ul class="list">
+            <li>Calories: <strong>1,700–1,900/day</strong> or maintenance if already much leaner</li>
+            <li>Protein stays high: <strong>100g/day</strong></li>
+            <li>Gym: <strong>3–4 sessions/week</strong></li>
+            <li>Expected result: flatter stomach, better hip/waist contrast, better glute shape, closer to aesthetic target</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Weekly Training Plan</h2>
+      </div>
+
+      <div class="plan-grid">
+        <div class="plan-card">
+          <h3>Day 1 — Glutes + Legs</h3>
+          <ul class="list">
+            <li>Hip thrust — 3 sets of 8–12</li>
+            <li>Leg press — 3 sets of 10–12</li>
+            <li>Romanian deadlift — 3 sets of 8–10</li>
+            <li>Cable kickbacks — 3 sets of 12–15</li>
+            <li>Hip abduction machine — 3 sets of 15–20</li>
+            <li>Dead bugs — 3 sets</li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <h3>Day 2 — Back + Shoulders + Core</h3>
+          <ul class="list">
+            <li>Lat pulldown — 3 sets of 8–12</li>
+            <li>Seated row — 3 sets of 8–12</li>
+            <li>Shoulder press — 2–3 sets of 8–12</li>
+            <li>Lateral raises — 3 sets of 12–15</li>
+            <li>Face pulls — 3 sets of 12–15</li>
+            <li>Side plank — 3 sets each side</li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <h3>Day 3 — Glutes + Legs + Abs</h3>
+          <ul class="list">
+            <li>Bulgarian split squat — 3 sets each leg</li>
+            <li>Glute bridge / hip thrust — 3 sets of 8–12</li>
+            <li>Hamstring curl — 3 sets of 10–12</li>
+            <li>Leg press or goblet squat — 3 sets of 10–12</li>
+            <li>Cable crunch — 3 sets of 10–15</li>
+            <li>Reverse crunch — 3 sets of 10–15</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="small" style="margin-top: 14px;">
+        Why this split works: the goal look is not just “smaller.”
+        It’s smaller waist + flatter stomach + better glute/hip shape.
+        That means fat loss and shape-building at the same time.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Food Structure</h2>
+      </div>
+
+      <div class="twocol">
+        <div class="plan-card">
+          <h3>Daily Targets</h3>
+          <ul class="list">
+            <li><strong>Calories:</strong> usually 1,600–1,900/day depending on phase</li>
+            <li><strong>Protein:</strong> 90–110g/day</li>
+            <li><strong>Water:</strong> 1.5–2.5L/day</li>
+            <li><strong>Steps:</strong> 8k–10k/day</li>
+            <li><strong>Sleep:</strong> aim for 7–9 hours</li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <h3>Simple Meal Rule</h3>
+          <p>
+            Every meal should include:
+          </p>
+          <ul class="list">
+            <li>1 protein source</li>
+            <li>1 carb source</li>
+            <li>fruit or veg</li>
+            <li>a small amount of fat</li>
+          </ul>
+          <p class="small">
+            Example meals: Greek yoghurt and fruit, eggs on toast, chicken rice bowl,
+            salmon and rice, stir fry with protein, wraps, noodles with chicken/tofu/prawns.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Progress Tracking</h2>
+      </div>
+
+      <div class="tracker">
+        <table>
+          <thead>
+            <tr>
+              <th>Track</th>
+              <th>How Often</th>
+              <th>What To Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Body weight</td>
+              <td>3–4 times a week</td>
+              <td>Use the average, not one random weigh-in</td>
+            </tr>
+            <tr>
+              <td>Waist measurement</td>
+              <td>Weekly</td>
+              <td>Measure smallest point + belly button area</td>
+            </tr>
+            <tr>
+              <td>Front / side / back photos</td>
+              <td>Every 4 weeks</td>
+              <td>Same lighting, same clothes, same pose</td>
+            </tr>
+            <tr>
+              <td>Gym performance</td>
+              <td>Every session</td>
+              <td>Try to add reps or a little weight over time</td>
+            </tr>
+            <tr>
+              <td>Steps + protein</td>
+              <td>Daily</td>
+              <td>These matter more than perfection</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Reality Check</h2>
+      </div>
+
+      <div class="cards">
+        <div class="mini-card">
+          <h3>At 1 month</h3>
+          <p>
+            Slightly tighter waist, less bloating, a bit leaner, better posture.
+            Enough to feel a difference — not enough for the final aesthetic yet.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>At 3 months</h3>
+          <p>
+            Proper visible change. Smaller waist, reduced lower stomach fullness,
+            better side profile, cleaner back line. This is where it starts looking serious.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>At 6 months</h3>
+          <p>
+            Best shot at getting close to goal photo 2.
+            Goal photo 4 is possible to approach, but exact similarity also depends on genetics and posing.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Big truth</h3>
+          <p>
+            This is not about becoming tiny. It is about getting leaner while building shape.
+            Smaller waist + flatter stomach + glutes = the look.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Weekly Check-In Board</h2>
+      </div>
+
+      <div class="tracker">
+        <table>
+          <thead>
+            <tr>
+              <th>Habit</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Protein hit</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+            </tr>
+            <tr>
+              <td>Steps hit</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+            </tr>
+            <tr>
+              <td>Calories on track</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+            </tr>
+            <tr>
+              <td>Workout done / recovery</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+            </tr>
+            <tr>
+              <td>Water goal</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+              <td class="check">☐</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="dot"></span>
+        <h2>Final Message</h2>
+      </div>
+
+      <div class="quote-box">
+        This body goal is achievable <strong>if the plan is followed properly</strong>.
+        The target is not “become as small as possible.”
+        The target is:
+        <strong>leaner waist, flatter lower stomach, less softness around the sides/back,
+        and better glute/hip shape.</strong><br><br>
+
+        If this is taken seriously for 3–6 months, the body can look very different.
+        If it is done casually, results will stay casual too.
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Cute plan, real structure, no fake fluff ♡
+    </p>
+
+  </div>
+</body>
+</html>
