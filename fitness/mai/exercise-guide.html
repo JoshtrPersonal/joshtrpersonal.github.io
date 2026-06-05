@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise Form Guide</title>
+  <style>
+    :root {
+      --page: #fff8f3;
+      --paper: #fffdf9;
+      --ink: #372d31;
+      --soft-ink: #755f69;
+      --rose: #d98cac;
+      --rose-soft: #f7dce8;
+      --lilac: #ddd2f2;
+      --sage: #dce7d3;
+      --butter: #f4e7ba;
+      --cocoa: #8a6659;
+      --line: #ead7d2;
+      --shadow: 0 14px 34px rgba(79, 54, 56, 0.12);
+      --soft-shadow: 0 8px 22px rgba(79, 54, 56, 0.08);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+      line-height: 1.58;
+      background:
+        radial-gradient(circle at 8% 4%, rgba(247, 220, 232, 0.75), transparent 28rem),
+        radial-gradient(circle at 90% 12%, rgba(220, 231, 211, 0.72), transparent 24rem),
+        linear-gradient(180deg, #fff9f4 0%, #f8eef4 48%, #fffaf2 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(138, 102, 89, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 102, 89, 0.045) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.12));
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1160px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 30px 0 64px;
+    }
+
+    .hero {
+      position: relative;
+      padding: clamp(24px, 5vw, 46px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.88), rgba(255,248,252,0.74)),
+        repeating-linear-gradient(-4deg, transparent 0 30px, rgba(244, 231, 186, 0.24) 31px 32px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "\2726";
+      position: absolute;
+      right: 28px;
+      top: 24px;
+      color: rgba(217, 140, 172, 0.26);
+      font-family: Georgia, serif;
+      font-size: 4.4rem;
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cocoa);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .section-kicker::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--rose);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-top: 12px;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      text-wrap: balance;
+    }
+
+    h2 {
+      margin-top: 44px;
+      margin-bottom: 16px;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin-top: 16px;
+      color: var(--soft-ink);
+      font-size: clamp(1rem, 2vw, 1.16rem);
+    }
+
+    .nav-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .soft-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(138, 102, 89, 0.18);
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: #fff;
+      color: #5c4650;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .quick-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .quick-list li {
+      margin: 0;
+    }
+
+    .quick-list a {
+      display: inline-flex;
+      border: 1px solid rgba(217, 140, 172, 0.38);
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: rgba(255,255,255,0.72);
+      color: #5c4650;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 5px 14px rgba(79, 54, 56, 0.06);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .exercise-card {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.78);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+    }
+
+    .exercise-card:target {
+      outline: 3px solid rgba(217, 140, 172, 0.42);
+      outline-offset: 4px;
+    }
+
+    .exercise-picture {
+      min-height: 190px;
+      padding: 14px;
+      background:
+        linear-gradient(135deg, rgba(247, 220, 232, 0.72), rgba(221, 210, 242, 0.58)),
+        repeating-linear-gradient(3deg, transparent 0 20px, rgba(255,255,255,0.28) 21px 22px);
+    }
+
+    .exercise-picture svg {
+      display: block;
+      width: 100%;
+      height: 180px;
+    }
+
+    .mat {
+      fill: rgba(255,255,255,0.72);
+      stroke: rgba(138, 102, 89, 0.22);
+      stroke-width: 2;
+    }
+
+    .machine,
+    .weight {
+      fill: rgba(138, 102, 89, 0.2);
+      stroke: rgba(138, 102, 89, 0.45);
+      stroke-width: 3;
+    }
+
+    .person {
+      fill: none;
+      stroke: #5d424b;
+      stroke-width: 9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .head {
+      fill: #5d424b;
+    }
+
+    .motion {
+      fill: none;
+      stroke: #d98cac;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 10 9;
+    }
+
+    .card-body {
+      padding: 17px;
+    }
+
+    .card-body h3 {
+      margin-bottom: 7px;
+      font-size: 1.08rem;
+    }
+
+    .exercise-name {
+      color: #49363f;
+      text-decoration-color: rgba(217, 140, 172, 0.78);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    .exercise-name:hover {
+      color: #9f5874;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 10px 0 12px;
+    }
+
+    .pill {
+      border: 1px solid rgba(138, 102, 89, 0.14);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(255,255,255,0.8);
+      color: var(--soft-ink);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .cue {
+      color: var(--soft-ink);
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .mini-note {
+      margin-top: 18px;
+      border-left: 4px solid var(--rose);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.68);
+      color: var(--soft-ink);
+      box-shadow: var(--soft-shadow);
+    }
+
+    @media (max-width: 980px) {
+      .guide-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 18px, 1160px);
+        padding-top: 12px;
+      }
+
+      .hero {
+        padding: 20px 16px;
+      }
+
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">Exercise guide</p>
+      <h1>How To Do The Plan</h1>
+      <p class="subtitle">
+        Each exercise name links to a proper how-to guide. The pictures here are simple visual
+        reminders, and the notes are the main cues to keep the reps controlled and useful.
+      </p>
+      <div class="nav-row">
+        <a class="soft-button" href="index.html#workout-title">Back to plan</a>
+        <a class="soft-button" href="#exercise-list">Jump to exercises</a>
+      </div>
+      <ul class="quick-list" id="top"></ul>
+    </section>
+
+    <h2 id="exercise-list"><span class="section-kicker">Form links</span><br>Exercise Library</h2>
+    <section class="guide-grid" aria-label="Exercise how-to cards"></section>
+
+    <p class="mini-note">
+      Start lighter than you think. The best reps are boring, controlled, and repeatable.
+      If a movement causes sharp pain, stop and ask a trainer to check setup and form.
+    </p>
+  </main>
+
+  <script>
+    (() => {
+      const exercises = [
+        {
+          id: "hip-thrust",
+          name: "Hip thrust",
+          day: "Day 1 / Day 3",
+          target: "Glutes",
+          kind: "bridge",
+          href: "https://exrx.net/WeightExercises/GluteusMaximus/BBHipThrust",
+          cue: "Upper back supported, ribs down, hips drive up.",
+          tips: ["Set the bench below the shoulder blades.", "Drive through heels and squeeze glutes at the top.", "Stop before the low back starts arching."]
+        },
+        {
+          id: "leg-press",
+          name: "Leg press",
+          day: "Day 1 / Day 3",
+          target: "Legs + glutes",
+          kind: "machine",
+          href: "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/leg-press/vid-20084684",
+          cue: "Knees track with toes; control the depth.",
+          tips: ["Keep hips and back against the pad.", "Use a range where heels stay down.", "Do not lock the knees hard at the top."]
+        },
+        {
+          id: "romanian-deadlift",
+          name: "Romanian deadlift",
+          day: "Day 1",
+          target: "Hamstrings + glutes",
+          kind: "hinge",
+          href: "https://www.verywellfit.com/how-to-romanian-deadlift-4589051",
+          cue: "Hinge from the hips, not the waist.",
+          tips: ["Keep a soft bend in the knees.", "Let the hips move back as the torso tips forward.", "Keep the weight close to the legs."]
+        },
+        {
+          id: "cable-kickbacks",
+          name: "Cable kickbacks",
+          day: "Day 1",
+          target: "Glutes",
+          kind: "kickback",
+          href: "https://www.puregym.com/exercises/glutes/glute-kickbacks/cable-kickbacks/",
+          cue: "Move the leg; keep the body quiet.",
+          tips: ["Brace on the machine and avoid swinging.", "Kick slightly back, not high enough to arch the back.", "Pause and squeeze the working glute."]
+        },
+        {
+          id: "hip-abduction",
+          name: "Hip abduction",
+          day: "Day 1",
+          target: "Side glutes",
+          kind: "machine",
+          href: "https://mysetplan.com/exercises/machine-hip-abduction",
+          cue: "Push the knees out with control.",
+          tips: ["Keep back against the pad.", "Do not let the stack slam on the return.", "Use a smooth tempo and full comfortable range."]
+        },
+        {
+          id: "dead-bugs",
+          name: "Dead bugs",
+          day: "Day 1",
+          target: "Core control",
+          kind: "core",
+          href: "https://www.nasm.org/resource-center/exercise-library/dead-bug",
+          cue: "Low back stays gently pressed down.",
+          tips: ["Move opposite arm and leg slowly.", "Only lower as far as the back position stays stable.", "Breathe out during the reach."]
+        },
+        {
+          id: "lat-pulldown",
+          name: "Lat pulldown",
+          day: "Day 2",
+          target: "Back",
+          kind: "pulldown",
+          href: "https://exrx.net/WeightExercises/LatissimusDorsi/CBFrontPulldown",
+          cue: "Pull elbows down, not hands only.",
+          tips: ["Sit tall with thighs secured.", "Pull to upper chest, not behind the neck.", "Control the stretch at the top."]
+        },
+        {
+          id: "seated-row",
+          name: "Seated row",
+          day: "Day 2",
+          target: "Back",
+          kind: "row",
+          href: "https://exrx.net/WeightExercises/BackGeneral/CBSeatedRow",
+          cue: "Chest proud, elbows travel back.",
+          tips: ["Start light and keep the torso controlled.", "Pull the handle toward the waist.", "Let shoulder blades move, but do not bounce."]
+        },
+        {
+          id: "shoulder-press",
+          name: "Shoulder press",
+          day: "Day 2",
+          target: "Shoulders",
+          kind: "press",
+          href: "https://exrx.net/WeightExercises/DeltoidAnterior/DBShoulderPress",
+          cue: "Ribs down, press overhead with control.",
+          tips: ["Keep wrists stacked over elbows.", "Avoid leaning back to turn it into a chest press.", "Lower to shoulder height with control."]
+        },
+        {
+          id: "lateral-raises",
+          name: "Lateral raises",
+          day: "Day 2",
+          target: "Side delts",
+          kind: "raise",
+          href: "https://www.puregym.com/exercises/arms-and-shoulders/lateral-raises/dumbbell-lateral-raise/",
+          cue: "Light weight, smooth lift.",
+          tips: ["Keep a small bend in elbows.", "Stop around shoulder height.", "No leg drive or shrugging to throw the weight up."]
+        },
+        {
+          id: "face-pulls",
+          name: "Face pulls",
+          day: "Day 2",
+          target: "Rear delts + upper back",
+          kind: "pull",
+          href: "https://www.nasm.org/resource-center/exercise-library/face-pull",
+          cue: "Pull rope toward face with elbows high.",
+          tips: ["Use a rope attachment around eye height.", "Finish with hands near ears.", "Keep shoulders down instead of shrugging."]
+        },
+        {
+          id: "side-plank",
+          name: "Side plank",
+          day: "Day 2",
+          target: "Obliques",
+          kind: "plank",
+          href: "https://www.nasm.org/resource-center/exercise-library/side-plank",
+          cue: "Straight line from head to feet.",
+          tips: ["Elbow stays under shoulder.", "Lift hips without twisting backward.", "Quality beats holding too long with sagging form."]
+        },
+        {
+          id: "bulgarian-split-squat",
+          name: "Bulgarian split squat",
+          day: "Day 3",
+          target: "Legs + glutes",
+          kind: "split",
+          href: "https://www.nasm.org/resource-center/exercise-library/bulgarian-split-squat",
+          cue: "Front leg does the work.",
+          tips: ["Set the front foot far enough forward to feel stable.", "Keep knee tracking with toes.", "Use a wall or rail for balance while learning."]
+        },
+        {
+          id: "glute-bridge",
+          name: "Glute bridge",
+          day: "Day 3",
+          target: "Glutes",
+          kind: "bridge",
+          href: "https://blog.nasm.org/how-to-do-a-glute-bridge",
+          cue: "Tuck ribs, squeeze glutes, lift hips.",
+          tips: ["Feet roughly hip-width apart.", "Raise until shoulders, hips, and knees line up.", "If hamstrings take over, move feet slightly closer."]
+        },
+        {
+          id: "hamstring-curl",
+          name: "Hamstring curl",
+          day: "Day 3",
+          target: "Hamstrings",
+          kind: "curl",
+          href: "https://www.acefitness.org/resources/everyone/exercise-library/153/lying-hamstrings-curl/",
+          cue: "Curl smoothly without lifting hips.",
+          tips: ["Align the machine pivot with the knee joint.", "Keep hips down and abs braced.", "Lower slowly instead of dropping the weight."]
+        },
+        {
+          id: "goblet-squat",
+          name: "Goblet squat",
+          day: "Day 3",
+          target: "Legs + core",
+          kind: "squat",
+          href: "https://www.healthline.com/health/fitness-exercise/dumbbell-goblet-squat",
+          cue: "Weight close, torso tall.",
+          tips: ["Hold the dumbbell close to the chest.", "Knees follow the toes.", "Keep the whole foot planted while standing up."]
+        },
+        {
+          id: "cable-crunch",
+          name: "Cable crunch",
+          day: "Day 3",
+          target: "Abs",
+          kind: "crunch",
+          href: "https://exrx.net/WeightExercises/RectusAbdominis/CBKneelingCrunch",
+          cue: "Crunch the ribs toward the hips.",
+          tips: ["Keep hips mostly still.", "Do not turn it into an arm pulldown.", "Use a slow return so the abs stay under tension."]
+        },
+        {
+          id: "reverse-crunch",
+          name: "Reverse crunch",
+          day: "Day 3",
+          target: "Abs",
+          kind: "core",
+          href: "https://www.healthline.com/health/reverse-crunches",
+          cue: "Curl hips up, then lower slowly.",
+          tips: ["Keep knees bent around 90 degrees.", "Lift hips without swinging the legs.", "Mid-back stays close to the mat."]
+        }
+      ];
+
+      const picture = (kind, label) => {
+        const title = `${label} illustration`;
+        const base = {
+          bridge: `<rect class="mat" x="34" y="124" width="242" height="28" rx="14"/><rect class="weight" x="92" y="74" width="116" height="18" rx="9"/><circle class="head" cx="74" cy="98" r="13"/><path class="person" d="M88 101 L132 112 L181 91 L229 122 M132 112 L122 141 M181 91 L199 124"/><path class="motion" d="M130 82 C154 55 188 54 214 81"/>`,
+          machine: `<rect class="machine" x="48" y="32" width="36" height="120" rx="8"/><rect class="machine" x="214" y="34" width="34" height="118" rx="8"/><rect class="mat" x="83" y="118" width="132" height="28" rx="14"/><circle class="head" cx="136" cy="75" r="13"/><path class="person" d="M136 90 L136 119 M135 121 L104 148 M136 121 L184 148 M123 107 L91 101 M150 107 L207 103"/><path class="motion" d="M100 89 C78 84 66 90 58 105 M201 91 C224 85 235 91 242 106"/>`,
+          hinge: `<rect class="mat" x="34" y="134" width="242" height="20" rx="10"/><rect class="weight" x="92" y="118" width="112" height="16" rx="8"/><circle class="head" cx="114" cy="67" r="13"/><path class="person" d="M126 77 L166 102 L191 139 M164 102 L122 137 M150 93 L111 116 M153 94 L203 114"/><path class="motion" d="M166 74 C142 67 121 75 105 92"/>`,
+          kickback: `<rect class="machine" x="42" y="28" width="38" height="126" rx="8"/><rect class="mat" x="74" y="138" width="210" height="18" rx="9"/><circle class="head" cx="124" cy="76" r="13"/><path class="person" d="M135 86 L164 108 L149 139 M164 108 L207 121 M137 89 L90 105 M165 108 L197 84"/><path class="motion" d="M206 96 C230 88 248 96 260 113"/>`,
+          core: `<rect class="mat" x="36" y="128" width="240" height="24" rx="12"/><circle class="head" cx="94" cy="107" r="13"/><path class="person" d="M108 114 L151 128 M147 126 L179 99 M148 128 L191 141 M132 119 L102 82 M132 119 L166 88"/><path class="motion" d="M170 85 C190 66 216 69 232 90"/>`,
+          pulldown: `<rect class="machine" x="48" y="24" width="200" height="16" rx="8"/><rect class="machine" x="72" y="38" width="14" height="120" rx="6"/><rect class="machine" x="211" y="38" width="14" height="120" rx="6"/><circle class="head" cx="149" cy="84" r="13"/><path class="person" d="M149 98 L149 132 M149 103 L105 67 M149 103 L194 67 M135 132 L115 152 M163 132 L184 152"/><path class="motion" d="M108 55 L193 55"/>`,
+          row: `<rect class="machine" x="42" y="54" width="46" height="86" rx="8"/><rect class="mat" x="92" y="136" width="184" height="18" rx="9"/><circle class="head" cx="167" cy="84" r="13"/><path class="person" d="M158 99 L136 129 M136 129 L187 129 M159 103 L101 98 M160 103 L110 117 M185 129 L214 149"/><path class="motion" d="M99 88 C121 78 139 79 156 91"/>`,
+          press: `<rect class="mat" x="74" y="136" width="148" height="18" rx="9"/><circle class="head" cx="148" cy="82" r="13"/><path class="person" d="M148 96 L148 131 M148 105 L112 69 M148 105 L184 69 M134 130 L112 151 M162 130 L184 151"/><rect class="weight" x="95" y="55" width="28" height="16" rx="6"/><rect class="weight" x="175" y="55" width="28" height="16" rx="6"/><path class="motion" d="M112 45 C112 29 126 24 138 31 M184 45 C184 29 170 24 158 31"/>`,
+          raise: `<rect class="mat" x="74" y="136" width="148" height="18" rx="9"/><circle class="head" cx="148" cy="82" r="13"/><path class="person" d="M148 96 L148 131 M146 104 L98 103 M150 104 L198 103 M134 130 L112 151 M162 130 L184 151"/><rect class="weight" x="83" y="95" width="24" height="14" rx="5"/><rect class="weight" x="190" y="95" width="24" height="14" rx="5"/><path class="motion" d="M92 126 C78 106 79 83 96 66 M204 126 C218 106 217 83 200 66"/>`,
+          pull: `<rect class="machine" x="42" y="24" width="38" height="130" rx="8"/><circle class="head" cx="160" cy="82" r="13"/><path class="person" d="M160 97 L160 132 M160 104 L113 81 M160 104 L207 82 M145 132 L127 152 M175 132 L194 152"/><path class="motion" d="M91 76 C119 55 151 58 177 78 M91 76 C125 97 154 97 207 82"/>`,
+          plank: `<rect class="mat" x="36" y="132" width="240" height="24" rx="12"/><circle class="head" cx="80" cy="112" r="13"/><path class="person" d="M94 118 L160 119 L235 130 M126 119 L107 141 M160 119 L176 142 M235 130 L252 143"/><path class="motion" d="M163 102 C180 91 202 94 217 109"/>`,
+          split: `<rect class="machine" x="202" y="112" width="54" height="28" rx="8"/><rect class="mat" x="36" y="142" width="240" height="18" rx="9"/><circle class="head" cx="136" cy="73" r="13"/><path class="person" d="M137 88 L151 114 M151 114 L119 148 M151 114 L222 123 M139 95 L107 118 M141 95 L178 111"/><path class="motion" d="M118 129 C111 106 118 86 136 74"/>`,
+          curl: `<rect class="machine" x="54" y="80" width="184" height="34" rx="10"/><rect class="machine" x="206" y="114" width="34" height="40" rx="8"/><circle class="head" cx="82" cy="72" r="13"/><path class="person" d="M96 82 L146 96 L205 96 M146 96 L127 121 M205 96 L221 128"/><path class="motion" d="M209 88 C238 79 257 97 247 124"/>`,
+          squat: `<rect class="mat" x="52" y="142" width="210" height="18" rx="9"/><circle class="head" cx="148" cy="74" r="13"/><path class="person" d="M148 88 L148 113 M148 99 L123 103 M148 99 L173 103 M146 113 L112 145 M150 113 L190 145"/><rect class="weight" x="126" y="98" width="44" height="22" rx="8"/><path class="motion" d="M110 111 C95 128 96 145 114 156 M190 111 C205 128 204 145 186 156"/>`,
+          crunch: `<rect class="machine" x="46" y="24" width="34" height="132" rx="8"/><rect class="mat" x="92" y="140" width="168" height="18" rx="9"/><circle class="head" cx="154" cy="83" r="13"/><path class="person" d="M154 96 L145 123 M145 123 L119 150 M145 123 L182 150 M153 99 L101 67 M153 99 L111 75"/><path class="motion" d="M156 66 C137 63 119 74 109 91"/>`
+        };
+        return `<svg role="img" aria-label="${title}" viewBox="0 0 300 180">${base[kind] || base.core}</svg>`;
+      };
+
+      const grid = document.querySelector(".guide-grid");
+      const quickList = document.querySelector(".quick-list");
+
+      quickList.innerHTML = exercises.map((exercise) => (
+        `<li><a href="#${exercise.id}">${exercise.name}</a></li>`
+      )).join("");
+
+      grid.innerHTML = exercises.map((exercise) => (
+        `<article class="exercise-card" id="${exercise.id}">
+          <div class="exercise-picture">${picture(exercise.kind, exercise.name)}</div>
+          <div class="card-body">
+            <h3><a class="exercise-name" href="${exercise.href}" target="_blank" rel="noopener noreferrer">${exercise.name}</a></h3>
+            <div class="meta">
+              <span class="pill">${exercise.day}</span>
+              <span class="pill">${exercise.target}</span>
+            </div>
+            <p class="cue">${exercise.cue}</p>
+            <ul>${exercise.tips.map((tip) => `<li>${tip}</li>`).join("")}</ul>
+          </div>
+        </article>`
+      )).join("");
+
+      if (location.hash) {
+        requestAnimationFrame(() => {
+          const target = document.querySelector(location.hash);
+          if (target) target.scrollIntoView({ block: "start" });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

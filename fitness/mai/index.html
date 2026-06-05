@@ -287,7 +287,20 @@
       background: #fff;
       color: #5c4650;
       font-weight: 800;
+      text-decoration: none;
       box-shadow: var(--soft-shadow);
+    }
+
+    .exercise-link {
+      color: #49363f;
+      font-weight: 800;
+      text-decoration-color: rgba(217, 140, 172, 0.78);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .exercise-link:hover {
+      color: #9f5874;
     }
 
     .photo-board {
@@ -887,7 +900,7 @@
               <input type="file" accept="image/*" data-upload="current-front">
               <span class="photo-frame">
                 <!-- Manual image path: change data-default-src and src if you want another Current Front image. -->
-                <img src="from/from%20(1).jpeg" alt="Current front photo" data-slot="current-front" data-default-src="from/from%20(1).jpeg">
+                <img src="from/from%20(2).jpeg" alt="Current front photo" data-slot="current-front" data-default-src="from/from%20(1).jpeg">
                 
               </span>
             </label>
@@ -899,7 +912,7 @@
               <input type="file" accept="image/*" data-upload="current-side">
               <span class="photo-frame">
                 <!-- Manual image path: change data-default-src and src if you want another Current Side image. -->
-                <img src="from/from%20(2).jpeg" alt="Current side photo" data-slot="current-side" data-default-src="from/from%20(2).jpeg">
+                <img src="from/from%20(3).jpeg" alt="Current side photo" data-slot="current-side" data-default-src="from/from%20(2).jpeg">
                 
               </span>
             </label>
@@ -911,7 +924,7 @@
               <input type="file" accept="image/*" data-upload="current-back">
               <span class="photo-frame">
                 <!-- Manual image path: change data-default-src and src if you want another Current Back image. -->
-                <img src="from/from%20(3).jpeg" alt="Current back photo" data-slot="current-back" data-default-src="from/from%20(3).jpeg">
+                <img src="from/from%20(1).jpeg" alt="Current back photo" data-slot="current-back" data-default-src="from/from%20(3).jpeg">
                 
               </span>
             </label>
@@ -1080,42 +1093,45 @@
           <p class="section-kicker">Weekly workout</p>
           <h2 id="workout-title">Three Training Days</h2>
         </div>
+        <div class="action-row">
+          <a class="soft-button" href="exercise-guide.html">Exercise guide</a>
+        </div>
       </div>
 
       <div class="grid three">
         <article class="workout">
           <h3>Day 1 &mdash; Glutes + Legs</h3>
           <ul>
-            <li>Hip thrust: 3 sets of 8&ndash;12</li>
-            <li>Leg press: 3 sets of 10&ndash;12</li>
-            <li>Romanian deadlift: 3 sets of 8&ndash;10</li>
-            <li>Cable kickbacks: 3 sets of 12&ndash;15</li>
-            <li>Hip abduction: 3 sets of 15&ndash;20</li>
-            <li>Dead bugs: 3 sets</li>
+            <li><a class="exercise-link" href="exercise-guide.html#hip-thrust">Hip thrust</a>: 3 sets of 8&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#leg-press">Leg press</a>: 3 sets of 10&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#romanian-deadlift">Romanian deadlift</a>: 3 sets of 8&ndash;10</li>
+            <li><a class="exercise-link" href="exercise-guide.html#cable-kickbacks">Cable kickbacks</a>: 3 sets of 12&ndash;15</li>
+            <li><a class="exercise-link" href="exercise-guide.html#hip-abduction">Hip abduction</a>: 3 sets of 15&ndash;20</li>
+            <li><a class="exercise-link" href="exercise-guide.html#dead-bugs">Dead bugs</a>: 3 sets</li>
           </ul>
         </article>
 
         <article class="workout">
           <h3>Day 2 &mdash; Back + Shoulders + Core</h3>
           <ul>
-            <li>Lat pulldown: 3 sets of 8&ndash;12</li>
-            <li>Seated row: 3 sets of 8&ndash;12</li>
-            <li>Shoulder press: 2&ndash;3 sets of 8&ndash;12</li>
-            <li>Lateral raises: 3 sets of 12&ndash;15</li>
-            <li>Face pulls: 3 sets of 12&ndash;15</li>
-            <li>Side plank: 3 sets each side</li>
+            <li><a class="exercise-link" href="exercise-guide.html#lat-pulldown">Lat pulldown</a>: 3 sets of 8&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#seated-row">Seated row</a>: 3 sets of 8&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#shoulder-press">Shoulder press</a>: 2&ndash;3 sets of 8&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#lateral-raises">Lateral raises</a>: 3 sets of 12&ndash;15</li>
+            <li><a class="exercise-link" href="exercise-guide.html#face-pulls">Face pulls</a>: 3 sets of 12&ndash;15</li>
+            <li><a class="exercise-link" href="exercise-guide.html#side-plank">Side plank</a>: 3 sets each side</li>
           </ul>
         </article>
 
         <article class="workout">
           <h3>Day 3 &mdash; Glutes + Legs + Abs</h3>
           <ul>
-            <li>Bulgarian split squat: 3 sets each leg</li>
-            <li>Hip thrust or glute bridge: 3 sets of 8&ndash;12</li>
-            <li>Hamstring curl: 3 sets of 10&ndash;12</li>
-            <li>Leg press or goblet squat: 3 sets of 10&ndash;12</li>
-            <li>Cable crunch: 3 sets of 10&ndash;15</li>
-            <li>Reverse crunch: 3 sets of 10&ndash;15</li>
+            <li><a class="exercise-link" href="exercise-guide.html#bulgarian-split-squat">Bulgarian split squat</a>: 3 sets each leg</li>
+            <li><a class="exercise-link" href="exercise-guide.html#hip-thrust">Hip thrust</a> or <a class="exercise-link" href="exercise-guide.html#glute-bridge">glute bridge</a>: 3 sets of 8&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#hamstring-curl">Hamstring curl</a>: 3 sets of 10&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#leg-press">Leg press</a> or <a class="exercise-link" href="exercise-guide.html#goblet-squat">goblet squat</a>: 3 sets of 10&ndash;12</li>
+            <li><a class="exercise-link" href="exercise-guide.html#cable-crunch">Cable crunch</a>: 3 sets of 10&ndash;15</li>
+            <li><a class="exercise-link" href="exercise-guide.html#reverse-crunch">Reverse crunch</a>: 3 sets of 10&ndash;15</li>
           </ul>
         </article>
       </div>
