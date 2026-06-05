@@ -209,50 +209,21 @@
     }
 
     .exercise-picture {
-      min-height: 190px;
-      padding: 14px;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      padding: 8px;
       background:
-        linear-gradient(135deg, rgba(247, 220, 232, 0.72), rgba(221, 210, 242, 0.58)),
+        linear-gradient(135deg, rgba(255, 253, 249, 0.94), rgba(247, 220, 232, 0.38)),
         repeating-linear-gradient(3deg, transparent 0 20px, rgba(255,255,255,0.28) 21px 22px);
     }
 
-    .exercise-picture svg {
+    .exercise-picture img {
       display: block;
       width: 100%;
-      height: 180px;
-    }
-
-    .mat {
-      fill: rgba(255,255,255,0.72);
-      stroke: rgba(138, 102, 89, 0.22);
-      stroke-width: 2;
-    }
-
-    .machine,
-    .weight {
-      fill: rgba(138, 102, 89, 0.2);
-      stroke: rgba(138, 102, 89, 0.45);
-      stroke-width: 3;
-    }
-
-    .person {
-      fill: none;
-      stroke: #5d424b;
-      stroke-width: 9;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .head {
-      fill: #5d424b;
-    }
-
-    .motion {
-      fill: none;
-      stroke: #d98cac;
-      stroke-width: 5;
-      stroke-linecap: round;
-      stroke-dasharray: 10 9;
+      height: 100%;
+      border-radius: 5px;
+      object-fit: contain;
+      background: #fff;
     }
 
     .card-body {
@@ -548,30 +519,11 @@
         }
       ];
 
-      const picture = (kind, label) => {
-        const title = `${label} illustration`;
-        const base = {
-          bridge: `<rect class="mat" x="34" y="124" width="242" height="28" rx="14"/><rect class="weight" x="92" y="74" width="116" height="18" rx="9"/><circle class="head" cx="74" cy="98" r="13"/><path class="person" d="M88 101 L132 112 L181 91 L229 122 M132 112 L122 141 M181 91 L199 124"/><path class="motion" d="M130 82 C154 55 188 54 214 81"/>`,
-          machine: `<rect class="machine" x="48" y="32" width="36" height="120" rx="8"/><rect class="machine" x="214" y="34" width="34" height="118" rx="8"/><rect class="mat" x="83" y="118" width="132" height="28" rx="14"/><circle class="head" cx="136" cy="75" r="13"/><path class="person" d="M136 90 L136 119 M135 121 L104 148 M136 121 L184 148 M123 107 L91 101 M150 107 L207 103"/><path class="motion" d="M100 89 C78 84 66 90 58 105 M201 91 C224 85 235 91 242 106"/>`,
-          hinge: `<rect class="mat" x="34" y="134" width="242" height="20" rx="10"/><rect class="weight" x="92" y="118" width="112" height="16" rx="8"/><circle class="head" cx="114" cy="67" r="13"/><path class="person" d="M126 77 L166 102 L191 139 M164 102 L122 137 M150 93 L111 116 M153 94 L203 114"/><path class="motion" d="M166 74 C142 67 121 75 105 92"/>`,
-          kickback: `<rect class="machine" x="42" y="28" width="38" height="126" rx="8"/><rect class="mat" x="74" y="138" width="210" height="18" rx="9"/><circle class="head" cx="124" cy="76" r="13"/><path class="person" d="M135 86 L164 108 L149 139 M164 108 L207 121 M137 89 L90 105 M165 108 L197 84"/><path class="motion" d="M206 96 C230 88 248 96 260 113"/>`,
-          core: `<rect class="mat" x="36" y="128" width="240" height="24" rx="12"/><circle class="head" cx="94" cy="107" r="13"/><path class="person" d="M108 114 L151 128 M147 126 L179 99 M148 128 L191 141 M132 119 L102 82 M132 119 L166 88"/><path class="motion" d="M170 85 C190 66 216 69 232 90"/>`,
-          pulldown: `<rect class="machine" x="48" y="24" width="200" height="16" rx="8"/><rect class="machine" x="72" y="38" width="14" height="120" rx="6"/><rect class="machine" x="211" y="38" width="14" height="120" rx="6"/><circle class="head" cx="149" cy="84" r="13"/><path class="person" d="M149 98 L149 132 M149 103 L105 67 M149 103 L194 67 M135 132 L115 152 M163 132 L184 152"/><path class="motion" d="M108 55 L193 55"/>`,
-          row: `<rect class="machine" x="42" y="54" width="46" height="86" rx="8"/><rect class="mat" x="92" y="136" width="184" height="18" rx="9"/><circle class="head" cx="167" cy="84" r="13"/><path class="person" d="M158 99 L136 129 M136 129 L187 129 M159 103 L101 98 M160 103 L110 117 M185 129 L214 149"/><path class="motion" d="M99 88 C121 78 139 79 156 91"/>`,
-          press: `<rect class="mat" x="74" y="136" width="148" height="18" rx="9"/><circle class="head" cx="148" cy="82" r="13"/><path class="person" d="M148 96 L148 131 M148 105 L112 69 M148 105 L184 69 M134 130 L112 151 M162 130 L184 151"/><rect class="weight" x="95" y="55" width="28" height="16" rx="6"/><rect class="weight" x="175" y="55" width="28" height="16" rx="6"/><path class="motion" d="M112 45 C112 29 126 24 138 31 M184 45 C184 29 170 24 158 31"/>`,
-          raise: `<rect class="mat" x="74" y="136" width="148" height="18" rx="9"/><circle class="head" cx="148" cy="82" r="13"/><path class="person" d="M148 96 L148 131 M146 104 L98 103 M150 104 L198 103 M134 130 L112 151 M162 130 L184 151"/><rect class="weight" x="83" y="95" width="24" height="14" rx="5"/><rect class="weight" x="190" y="95" width="24" height="14" rx="5"/><path class="motion" d="M92 126 C78 106 79 83 96 66 M204 126 C218 106 217 83 200 66"/>`,
-          pull: `<rect class="machine" x="42" y="24" width="38" height="130" rx="8"/><circle class="head" cx="160" cy="82" r="13"/><path class="person" d="M160 97 L160 132 M160 104 L113 81 M160 104 L207 82 M145 132 L127 152 M175 132 L194 152"/><path class="motion" d="M91 76 C119 55 151 58 177 78 M91 76 C125 97 154 97 207 82"/>`,
-          plank: `<rect class="mat" x="36" y="132" width="240" height="24" rx="12"/><circle class="head" cx="80" cy="112" r="13"/><path class="person" d="M94 118 L160 119 L235 130 M126 119 L107 141 M160 119 L176 142 M235 130 L252 143"/><path class="motion" d="M163 102 C180 91 202 94 217 109"/>`,
-          split: `<rect class="machine" x="202" y="112" width="54" height="28" rx="8"/><rect class="mat" x="36" y="142" width="240" height="18" rx="9"/><circle class="head" cx="136" cy="73" r="13"/><path class="person" d="M137 88 L151 114 M151 114 L119 148 M151 114 L222 123 M139 95 L107 118 M141 95 L178 111"/><path class="motion" d="M118 129 C111 106 118 86 136 74"/>`,
-          curl: `<rect class="machine" x="54" y="80" width="184" height="34" rx="10"/><rect class="machine" x="206" y="114" width="34" height="40" rx="8"/><circle class="head" cx="82" cy="72" r="13"/><path class="person" d="M96 82 L146 96 L205 96 M146 96 L127 121 M205 96 L221 128"/><path class="motion" d="M209 88 C238 79 257 97 247 124"/>`,
-          squat: `<rect class="mat" x="52" y="142" width="210" height="18" rx="9"/><circle class="head" cx="148" cy="74" r="13"/><path class="person" d="M148 88 L148 113 M148 99 L123 103 M148 99 L173 103 M146 113 L112 145 M150 113 L190 145"/><rect class="weight" x="126" y="98" width="44" height="22" rx="8"/><path class="motion" d="M110 111 C95 128 96 145 114 156 M190 111 C205 128 204 145 186 156"/>`,
-          crunch: `<rect class="machine" x="46" y="24" width="34" height="132" rx="8"/><rect class="mat" x="92" y="140" width="168" height="18" rx="9"/><circle class="head" cx="154" cy="83" r="13"/><path class="person" d="M154 96 L145 123 M145 123 L119 150 M145 123 L182 150 M153 99 L101 67 M153 99 L111 75"/><path class="motion" d="M156 66 C137 63 119 74 109 91"/>`
-        };
-        return `<svg role="img" aria-label="${title}" viewBox="0 0 300 180">${base[kind] || base.core}</svg>`;
-      };
-
       const grid = document.querySelector(".guide-grid");
       const quickList = document.querySelector(".quick-list");
+      const photo = (exercise) => (
+        `<img src="exercise-photos/${exercise.id}.png" alt="${exercise.name} gym demonstration photo" loading="lazy">`
+      );
 
       quickList.innerHTML = exercises.map((exercise) => (
         `<li><a href="#${exercise.id}">${exercise.name}</a></li>`
@@ -579,7 +531,7 @@
 
       grid.innerHTML = exercises.map((exercise) => (
         `<article class="exercise-card" id="${exercise.id}">
-          <div class="exercise-picture">${picture(exercise.kind, exercise.name)}</div>
+          <div class="exercise-picture">${photo(exercise)}</div>
           <div class="card-body">
             <h3><a class="exercise-name" href="${exercise.href}" target="_blank" rel="noopener noreferrer">${exercise.name}</a></h3>
             <div class="meta">
