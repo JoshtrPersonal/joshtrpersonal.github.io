@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Measurement Guide</title>
+  <style>
+    :root {
+      --page: #fff8f3;
+      --ink: #372d31;
+      --soft-ink: #755f69;
+      --rose: #d98cac;
+      --lilac: #ddd2f2;
+      --sage: #dce7d3;
+      --butter: #f4e7ba;
+      --cocoa: #8a6659;
+      --line: #ead7d2;
+      --shadow: 0 14px 34px rgba(79, 54, 56, 0.12);
+      --soft-shadow: 0 8px 22px rgba(79, 54, 56, 0.08);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+      line-height: 1.58;
+      background:
+        radial-gradient(circle at 8% 4%, rgba(247, 220, 232, 0.75), transparent 28rem),
+        radial-gradient(circle at 90% 12%, rgba(220, 231, 211, 0.72), transparent 24rem),
+        linear-gradient(180deg, #fff9f4 0%, #f8eef4 48%, #fffaf2 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(138, 102, 89, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 102, 89, 0.045) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.12));
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1160px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 30px 0 64px;
+    }
+
+    .hero,
+    .measure-card,
+    .rule-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.8);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      position: relative;
+      padding: clamp(24px, 5vw, 46px);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.88), rgba(255,248,252,0.74)),
+        repeating-linear-gradient(-4deg, transparent 0 30px, rgba(244, 231, 186, 0.24) 31px 32px);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "\2726";
+      position: absolute;
+      right: 28px;
+      top: 24px;
+      color: rgba(217, 140, 172, 0.26);
+      font-family: Georgia, serif;
+      font-size: 4.4rem;
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cocoa);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .section-kicker::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--rose);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-top: 12px;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      text-wrap: balance;
+    }
+
+    h2 {
+      margin-top: 44px;
+      margin-bottom: 16px;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.14rem;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .subtitle,
+    .muted {
+      color: var(--soft-ink);
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin-top: 16px;
+      font-size: clamp(1rem, 2vw, 1.16rem);
+    }
+
+    .nav-row,
+    .quick-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .soft-button,
+    .quick-list a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(138, 102, 89, 0.18);
+      border-radius: 999px;
+      background: #fff;
+      color: #5c4650;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .soft-button {
+      padding: 8px 13px;
+    }
+
+    .quick-list {
+      padding: 0;
+      list-style: none;
+    }
+
+    .quick-list li {
+      margin: 0;
+    }
+
+    .quick-list a {
+      padding: 7px 11px;
+      font-size: 0.88rem;
+    }
+
+    .rule-box {
+      margin-top: 18px;
+      padding: 18px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.86), rgba(220, 231, 211, 0.38));
+      box-shadow: var(--soft-shadow);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .measure-card {
+      overflow: hidden;
+    }
+
+    .measure-card:target {
+      outline: 3px solid rgba(217, 140, 172, 0.42);
+      outline-offset: 4px;
+    }
+
+    .measure-photo {
+      aspect-ratio: 1 / 1;
+      padding: 8px;
+      background:
+        linear-gradient(135deg, rgba(255,253,249,0.94), rgba(247,220,232,0.38)),
+        repeating-linear-gradient(3deg, transparent 0 20px, rgba(255,255,255,0.28) 21px 22px);
+    }
+
+    .measure-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 10px 0 12px;
+    }
+
+    .pill {
+      border: 1px solid rgba(138, 102, 89, 0.14);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(255,255,255,0.8);
+      color: var(--soft-ink);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .cue {
+      color: #49363f;
+      font-weight: 800;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100% - 18px, 1160px);
+        padding-top: 12px;
+      }
+
+      .hero {
+        padding: 20px 16px;
+      }
+
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">Measurement guide</p>
+      <h1>How To Measure Progress</h1>
+      <p class="subtitle">
+        Measure the same points, at the same time of day, in the same relaxed posture.
+        The goal is consistency, not trying to force a smaller number.
+      </p>
+      <div class="nav-row">
+        <a class="soft-button" href="index.html#tracking-title">Back to tracker</a>
+        <a class="soft-button" href="#measurement-list">Jump to measurements</a>
+      </div>
+      <ul class="quick-list">
+        <li><a href="#body-weight">Body weight</a></li>
+        <li><a href="#natural-waist">Natural waist</a></li>
+        <li><a href="#belly-button">Belly button</a></li>
+        <li><a href="#hips-glutes">Hips / glutes</a></li>
+        <li><a href="#front-photo">Front photo</a></li>
+        <li><a href="#side-back-photo">Side / back photos</a></li>
+      </ul>
+    </section>
+
+    <div class="rule-box">
+      <p class="cue">The tape rule:</p>
+      <p class="muted">
+        Start with the zero end of the tape on the front of the body, wrap the tape all
+        the way around the same horizontal line, and read the number where the tape meets
+        the zero mark again. Keep it snug enough to touch the skin or clothing, but not so
+        tight that it dents in.
+      </p>
+    </div>
+
+    <h2 id="measurement-list"><span class="section-kicker">Tracking points</span><br>What To Measure</h2>
+
+    <section class="guide-grid" aria-label="Measurement guide cards">
+      <article class="measure-card" id="body-weight">
+        <div class="measure-photo">
+          <img src="measurement-photos/body-weight.png" alt="Standing on a digital scale">
+        </div>
+        <div class="card-body">
+          <h3>Body Weight Average</h3>
+          <div class="meta">
+            <span class="pill">3&ndash;4 times/week</span>
+            <span class="pill">Use the average</span>
+          </div>
+          <p class="cue">Measure from the scale, not from one emotional weigh-in.</p>
+          <ul>
+            <li>Weigh in first thing in the morning, after the bathroom, before food or drink.</li>
+            <li>Stand still with feet centered on the scale.</li>
+            <li>Write down the number, then compare weekly averages instead of single days.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="measure-card" id="natural-waist">
+        <div class="measure-photo">
+          <img src="measurement-photos/natural-waist.png" alt="Measuring the natural waist with tape">
+        </div>
+        <div class="card-body">
+          <h3>Natural Waist</h3>
+          <div class="meta">
+            <span class="pill">Weekly</span>
+            <span class="pill">Smallest point</span>
+          </div>
+          <p class="cue">Measure around the smallest point between the bottom ribs and the top of the hip bones.</p>
+          <ul>
+            <li>Stand relaxed, feet about hip-width, stomach not sucked in.</li>
+            <li>Place the zero end at the front of the smallest waist point.</li>
+            <li>Wrap the tape around the back at the same height and read where it meets the zero end.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="measure-card" id="belly-button">
+        <div class="measure-photo">
+          <img src="measurement-photos/belly-button.png" alt="Measuring across the belly button with tape">
+        </div>
+        <div class="card-body">
+          <h3>Belly Button Measurement</h3>
+          <div class="meta">
+            <span class="pill">Weekly</span>
+            <span class="pill">Lower stomach check</span>
+          </div>
+          <p class="cue">Measure straight around the body with the tape crossing the center of the belly button.</p>
+          <ul>
+            <li>Keep the tape parallel to the floor from front to back.</li>
+            <li>Exhale normally, then measure without pulling the stomach in.</li>
+            <li>Use this number to track lower stomach change, bloating trends, and waistline consistency.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="measure-card" id="hips-glutes">
+        <div class="measure-photo">
+          <img src="measurement-photos/hips-glutes.png" alt="Measuring around the widest hip and glute point">
+        </div>
+        <div class="card-body">
+          <h3>Hip / Glute Measurement</h3>
+          <div class="meta">
+            <span class="pill">Every 2&ndash;4 weeks</span>
+            <span class="pill">Widest point</span>
+          </div>
+          <p class="cue">Measure around the fullest part of the glutes, not the hip bones.</p>
+          <ul>
+            <li>Stand with feet together or close together, weight even on both feet.</li>
+            <li>Wrap the tape around the widest point of the seat from front to back.</li>
+            <li>Check from the side that the tape is level and not sliding up at the back.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="measure-card" id="front-photo">
+        <div class="measure-photo">
+          <img src="measurement-photos/front-photo.png" alt="Front progress photo setup with tripod">
+        </div>
+        <div class="card-body">
+          <h3>Front Progress Photo</h3>
+          <div class="meta">
+            <span class="pill">Every 4 weeks</span>
+            <span class="pill">Same setup</span>
+          </div>
+          <p class="cue">Measure visual progress by keeping the camera and body position repeatable.</p>
+          <ul>
+            <li>Put the phone on a tripod or stable surface at about waist to chest height.</li>
+            <li>Use the same clothes, same room, same lighting, and same distance each time.</li>
+            <li>Stand relaxed with arms by sides, feet in the same place, and no twisting or posing.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="measure-card" id="side-back-photo">
+        <div class="measure-photo">
+          <img src="measurement-photos/side-back-photo.png" alt="Side and back progress photo setup">
+        </div>
+        <div class="card-body">
+          <h3>Side / Back Progress Photos</h3>
+          <div class="meta">
+            <span class="pill">Every 4 weeks</span>
+            <span class="pill">Posture check</span>
+          </div>
+          <p class="cue">Use these to track stomach projection, posture, back line, and glute shape.</p>
+          <ul>
+            <li>For the side photo, stand tall but normal: ribs down, shoulders relaxed, no sucking in.</li>
+            <li>For the back photo, face away from the camera with weight even on both feet.</li>
+            <li>Keep the same camera height and distance so changes are from the body, not the angle.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

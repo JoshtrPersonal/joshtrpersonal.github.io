@@ -356,25 +356,6 @@
       transform: translateX(-50%) rotate(-2deg);
     }
 
-    .photo-uploader {
-      display: block;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .photo-uploader:focus-visible .photo-frame {
-      outline: 3px solid rgba(217, 140, 172, 0.42);
-      outline-offset: 3px;
-    }
-
-    .photo-uploader input {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
     .photo-frame {
       position: relative;
       overflow: hidden;
@@ -396,31 +377,6 @@
       padding: 2px;
       background:
         linear-gradient(135deg, rgba(255, 248, 252, 0.92), rgba(244, 231, 186, 0.28));
-    }
-
-    .photo-overlay {
-      position: absolute;
-      left: 8px;
-      right: 8px;
-      bottom: 8px;
-      display: flex;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      border-radius: 999px;
-      padding: 6px 9px;
-      background: rgba(55, 45, 49, 0.58);
-      color: #fff;
-      font-size: 0.78rem;
-      font-weight: 800;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.18s ease, transform 0.18s ease;
-    }
-
-    .photo-uploader:hover .photo-overlay,
-    .photo-uploader:focus-visible .photo-overlay {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .caption {
@@ -888,96 +844,65 @@
             direction. The AI goal waits until the end, after the full plan has made the path clear.
           </p>
         </div>
-        <div class="action-row">
-          <button class="soft-button" type="button" data-clear-uploads>Clear uploads</button>
-        </div>
       </div>
 
       <div class="photo-board">
         <div class="photo-group is-current" aria-label="Current photos">
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="current-front">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Current Front image. -->
-                <img src="from/from%20(2).jpeg" alt="Current front photo" data-slot="current-front" data-default-src="from/from%20(1).jpeg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Current Front image. -->
+              <img src="from/from%20(2).jpeg" alt="Current front photo">
+            </div>
             <p class="caption">Current Front <span>starting point</span></p>
           </article>
 
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="current-side">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Current Side image. -->
-                <img src="from/from%20(3).jpeg" alt="Current side photo" data-slot="current-side" data-default-src="from/from%20(2).jpeg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Current Side image. -->
+              <img src="from/from%20(3).jpeg" alt="Current side photo">
+            </div>
             <p class="caption">Current Side <span>posture + stomach check</span></p>
           </article>
 
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="current-back">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Current Back image. -->
-                <img src="from/from%20(1).jpeg" alt="Current back photo" data-slot="current-back" data-default-src="from/from%20(3).jpeg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Current Back image. -->
+              <img src="from/from%20(1).jpeg" alt="Current back photo">
+            </div>
             <p class="caption">Current Back <span>back + waist line</span></p>
           </article>
         </div>
 
         <div class="photo-group is-inspo" aria-label="Goal reference photos">
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="goal-1">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Goal Photo 1 image. -->
-                <img src="to/to%20(1).jpg" alt="Goal reference photo 1" data-slot="goal-1" data-default-src="to/to%20(1).jpg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Goal Photo 1 image. -->
+              <img src="to/to%20(1).jpg" alt="Goal reference photo 1">
+            </div>
             <p class="caption">Goal Photo 1 <span>reference shape</span></p>
           </article>
 
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="goal-2">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Goal Photo 2 image. -->
-                <img src="to/to%20(2).jpg" alt="Goal reference photo 2" data-slot="goal-2" data-default-src="to/to%20(2).jpg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Goal Photo 2 image. -->
+              <img src="to/to%20(2).jpg" alt="Goal reference photo 2">
+            </div>
             <p class="caption">Goal Photo 2 <span>waist contrast</span></p>
           </article>
 
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="goal-3">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Goal Photo 3 image. -->
-                <img src="to/to%20(3).jpg" alt="Goal reference photo 3" data-slot="goal-3" data-default-src="to/to%20(3).jpg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Goal Photo 3 image. -->
+              <img src="to/to%20(3).jpg" alt="Goal reference photo 3">
+            </div>
             <p class="caption">Goal Photo 3 <span>stomach + styling</span></p>
           </article>
 
           <article class="polaroid">
-            <label class="photo-uploader" tabindex="0">
-              <input type="file" accept="image/*" data-upload="goal-4">
-              <span class="photo-frame">
-                <!-- Manual image path: change data-default-src and src if you want another Goal Photo 4 image. -->
-                <img src="to/to%20(4).jpg" alt="Goal reference photo 4" data-slot="goal-4" data-default-src="to/to%20(4).jpg">
-                
-              </span>
-            </label>
+            <div class="photo-frame">
+              <!-- Manual image path: change src if you want another Goal Photo 4 image. -->
+              <img src="to/to%20(4).jpg" alt="Goal reference photo 4">
+            </div>
             <p class="caption">Goal Photo 4 <span>overall aesthetic</span></p>
           </article>
         </div>
@@ -1187,6 +1112,9 @@
           <p class="section-kicker">Progress tracking</p>
           <h2 id="tracking-title">What To Track</h2>
         </div>
+        <div class="action-row">
+          <a class="soft-button" href="measurement-guide.html">Measurement guide</a>
+        </div>
       </div>
 
       <div class="table-wrap">
@@ -1200,27 +1128,27 @@
           </thead>
           <tbody>
             <tr>
-              <td>Body weight average</td>
+              <td><a class="exercise-link" href="measurement-guide.html#body-weight">Body weight average</a></td>
               <td>3&ndash;4 times/week</td>
               <td>Use the average, not one random weigh-in</td>
             </tr>
             <tr>
-              <td>Waist measurement</td>
+              <td><a class="exercise-link" href="measurement-guide.html#natural-waist">Waist measurement</a></td>
               <td>Weekly</td>
               <td>Smallest point, measured the same way each time</td>
             </tr>
             <tr>
-              <td>Belly button measurement</td>
+              <td><a class="exercise-link" href="measurement-guide.html#belly-button">Belly button measurement</a></td>
               <td>Weekly</td>
               <td>Good for lower stomach progress</td>
             </tr>
             <tr>
-              <td>Hip / glute measurement</td>
+              <td><a class="exercise-link" href="measurement-guide.html#hips-glutes">Hip / glute measurement</a></td>
               <td>Every 2&ndash;4 weeks</td>
               <td>Useful because shape can improve while weight changes slowly</td>
             </tr>
             <tr>
-              <td>Front / side / back photos</td>
+              <td><a class="exercise-link" href="measurement-guide.html#front-photo">Front</a> / <a class="exercise-link" href="measurement-guide.html#side-back-photo">side / back photos</a></td>
               <td>Every 4 weeks</td>
               <td>Same lighting, same clothes, same pose</td>
             </tr>
@@ -1379,13 +1307,10 @@
         </div>
 
         <article class="polaroid">
-          <label class="photo-uploader" tabindex="0">
-            <input type="file" accept="image/*" data-upload="ai-goal">
-            <span class="photo-frame is-contain">
-              <!-- Manual image path: change data-default-src and src if you want another AI Goal image. -->
-              <img src="goal/goal.png" alt="AI generated goal image" data-slot="ai-goal" data-default-src="goal/goal.png">
-            </span>
-          </label>
+          <div class="photo-frame is-contain">
+            <!-- Manual image path: change src if you want another AI Goal image. -->
+            <img src="goal/goal.png" alt="AI generated goal image">
+          </div>
           <p class="caption">AI Goal Preview <span>what consistent effort can move toward</span></p>
         </article>
       </div>
@@ -1396,12 +1321,8 @@
 
   <script>
     (() => {
-      const imagePrefix = "bodyGoalPlanner:image:";
       const checkPrefix = "bodyGoalPlanner:check:";
-      const uploadInputs = document.querySelectorAll("[data-upload]");
-      const slotImages = document.querySelectorAll("[data-slot]");
       const checks = document.querySelectorAll("[data-check]");
-      const clearUploads = document.querySelector("[data-clear-uploads]");
       const resetWeek = document.querySelector("[data-reset-week]");
 
       const canStore = (() => {
@@ -1443,63 +1364,6 @@
         }
       };
 
-      const readFile = (file) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      const makePreview = async (file) => {
-        const original = await readFile(file);
-        return new Promise((resolve) => {
-          const image = new Image();
-          image.onload = () => {
-            const maxSide = 1400;
-            const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
-            const canvas = document.createElement("canvas");
-            canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
-            canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
-            const context = canvas.getContext("2d");
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-            resolve(canvas.toDataURL("image/jpeg", 0.86));
-          };
-          image.onerror = () => resolve(original);
-          image.src = original;
-        });
-      };
-
-      slotImages.forEach((image) => {
-        const saved = storageGet(imagePrefix + image.dataset.slot);
-        if (saved) {
-          image.src = saved;
-        }
-      });
-
-      uploadInputs.forEach((input) => {
-        input.addEventListener("change", async () => {
-          const file = input.files && input.files[0];
-          if (!file) return;
-
-          const image = document.querySelector(`[data-slot="${input.dataset.upload}"]`);
-          if (!image) return;
-
-          const preview = await makePreview(file);
-          image.src = preview;
-          storageSet(imagePrefix + input.dataset.upload, preview);
-          input.value = "";
-        });
-      });
-
-      document.querySelectorAll(".photo-uploader").forEach((label) => {
-        label.addEventListener("keydown", (event) => {
-          if (event.key !== "Enter" && event.key !== " ") return;
-          event.preventDefault();
-          const input = label.querySelector("input[type='file']");
-          if (input) input.click();
-        });
-      });
-
       checks.forEach((checkbox) => {
         const key = checkPrefix + checkbox.dataset.check;
         checkbox.checked = storageGet(key) === "true";
@@ -1507,15 +1371,6 @@
           storageSet(key, String(checkbox.checked));
         });
       });
-
-      if (clearUploads) {
-        clearUploads.addEventListener("click", () => {
-          slotImages.forEach((image) => {
-            storageRemove(imagePrefix + image.dataset.slot);
-            image.src = image.dataset.defaultSrc;
-          });
-        });
-      }
 
       if (resetWeek) {
         resetWeek.addEventListener("click", () => {
