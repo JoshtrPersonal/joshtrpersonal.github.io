@@ -1,0 +1,17 @@
+{
+  "albums": [
+    {
+      "slug": "dorian",
+      "title": "Dorian",
+      "subtitle": "Party photos, from untouched originals to the final edits.",
+      "coverManifest": "./dorian/raw/photos.json"
+    },
+    {
+      "slug": "soapbox",
+      "title": "Soapbox Challenge",
+      "subtitle": "A full day at the Soapbox Challenge, captured frame by frame.",
+      "coverManifest": "./soapbox/raw/photos.json",
+      "excludeCoverPhotos": ["IMG_0001.jpg"]
+    }
+  ]
+}

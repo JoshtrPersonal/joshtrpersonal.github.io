@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0812" />
+  <title>Photo Albums | Josh Taylor-Roberts</title>
+  <meta name="description" content="Browse photo albums by Josh Taylor-Roberts." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #f7f4ff;
+      --muted: #c8bddf;
+      --line: rgba(255, 255, 255, .14);
+      --pink: #ff93c9;
+      --blue: #8ec5ff;
+      --yellow: #ffd86f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(255, 147, 201, .2), transparent 28rem),
+        radial-gradient(circle at 92% 12%, rgba(142, 197, 255, .17), transparent 27rem),
+        linear-gradient(180deg, #0b0812, #120d1d 55%, #0b0911);
+    }
+
+    .shell {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: clamp(56px, 10vw, 112px) 0 64px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .06);
+      color: #fff4fa;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--yellow);
+      box-shadow: 0 0 16px var(--yellow);
+    }
+
+    h1 {
+      max-width: 9ch;
+      margin: 0;
+      font-size: clamp(3.3rem, 10vw, 7.8rem);
+      line-height: .85;
+      letter-spacing: -.065em;
+      text-wrap: balance;
+    }
+
+    .intro {
+      max-width: 42rem;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.7;
+    }
+
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: clamp(44px, 8vw, 82px);
+    }
+
+    .album-card {
+      position: relative;
+      isolation: isolate;
+      min-height: clamp(360px, 48vw, 540px);
+      overflow: hidden;
+      display: flex;
+      align-items: end;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .055);
+      color: inherit;
+      text-decoration: none;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .38);
+      transform: translateZ(0);
+      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+    }
+
+    .album-card:hover,
+    .album-card:focus-visible {
+      transform: translateY(-7px);
+      border-color: rgba(255, 255, 255, .3);
+      box-shadow: 0 32px 82px rgba(0, 0, 0, .5);
+      outline: none;
+    }
+
+    .album-cover {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s cubic-bezier(.2, .8, .2, 1), opacity .35s ease;
+    }
+
+    .album-card:hover .album-cover,
+    .album-card:focus-visible .album-cover { transform: scale(1.045); }
+
+    .album-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(5, 4, 10, .02) 20%, rgba(5, 4, 10, .3) 56%, rgba(5, 4, 10, .94) 100%),
+        linear-gradient(120deg, rgba(255, 147, 201, .1), transparent 50%);
+    }
+
+    .album-content {
+      width: 100%;
+      padding: clamp(24px, 4vw, 36px);
+    }
+
+    .album-number {
+      display: block;
+      margin-bottom: 12px;
+      color: #f4eafa;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .album-card h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .album-card p {
+      max-width: 34rem;
+      margin: 12px 0 22px;
+      color: #ded5ed;
+      line-height: 1.55;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 850;
+    }
+
+    .cta::after {
+      content: "\2192";
+      display: inline-block;
+      transition: transform .2s ease;
+    }
+
+    .album-card:hover .cta::after,
+    .album-card:focus-visible .cta::after { transform: translateX(5px); }
+
+    .status {
+      grid-column: 1 / -1;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(255, 255, 255, .04);
+    }
+
+    footer {
+      margin-top: 48px;
+      color: rgba(216, 207, 231, .7);
+      font-size: .86rem;
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1200px); }
+      .album-grid { grid-template-columns: 1fr; }
+      .album-card { min-height: 390px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <span class="eyebrow">Josh Taylor-Roberts Photography</span>
+      <h1>Photo albums.</h1>
+      <p class="intro">A collection of people, places and very good days. Pick an album to browse the originals and finished edits.</p>
+    </header>
+
+    <section class="album-grid" id="album-grid" aria-label="Photo albums" aria-live="polite">
+      <div class="status">Loading albums&hellip;</div>
+    </section>
+
+    <footer>&copy; <span id="year"></span> Josh Taylor-Roberts</footer>
+  </main>
+
+  <script>
+    const grid = document.getElementById('album-grid');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function expandPhotos(manifest) {
+      const explicit = Array.isArray(manifest.photos)
+        ? manifest.photos.map(photo => typeof photo === 'string' ? photo : photo.file).filter(Boolean)
+        : [];
+      const generated = (manifest.patterns || []).flatMap(pattern => {
+        const files = [];
+        const start = Number(pattern.start) || 1;
+        const end = Number(pattern.end) || start;
+        for (let number = start; number <= end; number += 1) {
+          files.push(`${pattern.prefix || ''}${String(number).padStart(pattern.pad || 0, '0')}${pattern.ext || '.jpg'}`);
+        }
+        return files;
+      });
+      return [...explicit, ...generated];
+    }
+
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    async function getCover(album) {
+      const response = await fetch(album.coverManifest);
+      if (!response.ok) throw new Error(`Could not load ${album.coverManifest}`);
+      const manifest = await response.json();
+      const excluded = new Set(album.excludeCoverPhotos || []);
+      const photos = expandPhotos(manifest).filter(photo => !excluded.has(photo));
+      if (!photos.length) throw new Error(`No photos in ${album.coverManifest}`);
+      const manifestDirectory = album.coverManifest.slice(0, album.coverManifest.lastIndexOf('/') + 1);
+      const basePath = (manifest.imagesBasePath || './photos/').replace(/^\.\//, '');
+      return `${manifestDirectory}${basePath}${randomItem(photos)}`;
+    }
+
+    function renderCard(album, index, cover) {
+      const link = document.createElement('a');
+      link.className = 'album-card';
+      link.href = `./${encodeURIComponent(album.slug)}/`;
+      link.innerHTML = `
+        <img class="album-cover" src="${cover}" alt="" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
+        <div class="album-content">
+          <span class="album-number">Album ${String(index + 1).padStart(2, '0')}</span>
+          <h2>${album.title}</h2>
+          <p>${album.subtitle || 'Open this photo collection.'}</p>
+          <span class="cta">View album</span>
+        </div>`;
+      return link;
+    }
+
+    fetch('./albums.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Could not load albums');
+        return response.json();
+      })
+      .then(async data => {
+        const albums = Array.isArray(data.albums) ? data.albums : [];
+        if (!albums.length) throw new Error('No albums configured');
+        const cards = await Promise.all(albums.map(async (album, index) => {
+          try {
+            return renderCard(album, index, await getCover(album));
+          } catch (error) {
+            console.warn(error);
+            return renderCard(album, index, '');
+          }
+        }));
+        grid.replaceChildren(...cards);
+      })
+      .catch(error => {
+        console.error(error);
+        grid.innerHTML = '<div class="status">The albums could not be loaded. Please refresh and try again.</div>';
+      });
+  </script>
+</body>
+</html>
