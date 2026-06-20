@@ -1,0 +1,16 @@
+{
+  "title": "Soapbox Album",
+  "subtitle": "Photography sharepoint for everyone at the event.",
+  "imagesBasePath": "./photos/",
+  "downloadZip": "./downloads/full.zip",
+  "photos": [],
+  "patterns": [
+    {
+      "prefix": "IMG_",
+      "start": 1,
+      "end": 476,
+      "pad": 4,
+      "ext": ".jpg"
+    }
+  ]
+}

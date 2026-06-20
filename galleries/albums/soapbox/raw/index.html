@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dorian Album | Photo Share</title>
+  <meta name="description" content="Dorian party album with fast preview and one-click downloads." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0810;
+      --bg-2: #151124;
+      --panel: rgba(22, 18, 37, 0.78);
+      --panel-strong: rgba(32, 25, 52, 0.92);
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f7f4ff;
+      --muted: #c8bddf;
+      --accent: #ff93c9;
+      --accent-2: #8ec5ff;
+      --accent-3: #ffd86f;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 147, 201, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(142, 197, 255, 0.16), transparent 25%),
+        radial-gradient(circle at 50% 120%, rgba(255, 216, 111, 0.08), transparent 30%),
+        linear-gradient(180deg, #0b0812 0%, #120d1d 40%, #0b0911 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(40px);
+      opacity: 0.55;
+    }
+
+    body::before {
+      width: 18rem;
+      height: 18rem;
+      left: -4rem;
+      top: 10rem;
+      background: rgba(255, 147, 201, 0.16);
+      border-radius: 50%;
+    }
+
+    body::after {
+      width: 24rem;
+      height: 24rem;
+      right: -8rem;
+      top: 20rem;
+      background: rgba(142, 197, 255, 0.12);
+      border-radius: 50%;
+    }
+
+    .shell {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      position: sticky;
+      top: 14px;
+      z-index: 30;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)),
+        linear-gradient(120deg, rgba(255, 147, 201, 0.09), rgba(142, 197, 255, 0.08));
+      backdrop-filter: blur(16px) saturate(1.2);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 216, 111, 0.15), transparent 18%),
+        radial-gradient(circle at 88% 12%, rgba(142, 197, 255, 0.18), transparent 16%),
+        radial-gradient(circle at 50% 120%, rgba(255, 147, 201, 0.18), transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .8fr);
+      gap: 18px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #fff6fb;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .eyebrow::before {
+      content: "✦";
+      color: var(--accent-3);
+      font-size: .92rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.6vw, 4rem);
+      line-height: .95;
+      letter-spacing: -.04em;
+      max-width: 10ch;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      margin: 12px 0 0;
+      max-width: 58ch;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-card {
+      border-radius: 22px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .mini-label {
+      display: block;
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #dacff3;
+      margin-bottom: 8px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: .93rem;
+      color: #f5efff;
+      backdrop-filter: blur(12px);
+    }
+
+    .pill::before {
+      content: "•";
+      color: var(--accent-3);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid transparent;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 800;
+      color: #190f22;
+      background: linear-gradient(135deg, var(--accent-3), var(--accent));
+      box-shadow: 0 10px 30px rgba(255, 147, 201, 0.24);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(255, 147, 201, 0.28);
+    }
+
+    .btn.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 24px 4px 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      letter-spacing: -.03em;
+    }
+
+    .gallery-wrap {
+      position: relative;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      position: relative;
+      margin: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow);
+      transform: translateZ(0);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      isolation: isolate;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(6, 8, 16, 0.68) 100%);
+      z-index: 1;
+      pointer-events: none;
+      opacity: .9;
+    }
+
+    .card:hover,
+    .card:focus-within {
+      transform: translateY(-6px) rotate(-0.35deg);
+      border-color: rgba(255, 147, 201, 0.45);
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    }
+
+    .card:nth-child(3n):hover,
+    .card:nth-child(3n):focus-within {
+      transform: translateY(-6px) rotate(0.45deg);
+    }
+
+    .card button {
+      border: 0;
+      padding: 0;
+      width: 100%;
+      background: transparent;
+      cursor: zoom-in;
+      position: relative;
+      display: block;
+    }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #05070d;
+      transition: transform .5s ease, filter .3s ease;
+    }
+
+    .card:hover img,
+    .card:focus-within img {
+      transform: scale(1.035);
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .meta {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .caption-wrap {
+      min-width: 0;
+    }
+
+    .caption-label {
+      display: inline-block;
+      margin-bottom: 6px;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.68);
+    }
+
+    .caption {
+      margin: 0;
+      font-size: .96rem;
+      font-weight: 700;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 15ch;
+    }
+
+    .download {
+      flex-shrink: 0;
+      text-decoration: none;
+      color: #fff;
+      font-size: .83rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 8px 12px;
+      backdrop-filter: blur(10px);
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .download:hover,
+    .download:focus-visible {
+      background: rgba(255,255,255,.15);
+      transform: translateY(-1px);
+    }
+
+    .empty {
+      margin: 18px 0 0;
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.03);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 7, 14, 0.9);
+      backdrop-filter: blur(14px);
+      z-index: 200;
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .lightbox.open { display: grid; }
+
+    .lightbox-stage {
+      width: min(1400px, 100%);
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+    }
+
+    .lightbox img {
+      max-width: min(1500px, 92vw);
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: #05070d;
+      box-shadow: 0 24px 70px rgba(0,0,0,.45);
+    }
+
+    .lightbox-meta {
+      width: min(900px, 92vw);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .lightbox-caption {
+      margin: 0;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .lightbox-bar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 10px;
+      z-index: 210;
+    }
+
+    .lightbox-bar button,
+    .lightbox-bar a {
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      padding: 11px 14px;
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+    }
+
+    .lightbox-bar button:hover,
+    .lightbox-bar a:hover,
+    .lightbox-bar button:focus-visible,
+    .lightbox-bar a:focus-visible {
+      background: rgba(255,255,255,.14);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        position: static;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .shell {
+        width: min(100vw - 20px, 1440px);
+        padding-top: 14px;
+      }
+
+      .hero {
+        padding: 16px;
+        border-radius: 24px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .card,
+      .card img {
+        border-radius: 18px;
+      }
+
+      .section-head {
+        margin-top: 18px;
+      }
+
+      .caption {
+        max-width: 11ch;
+        font-size: .86rem;
+      }
+
+      .download {
+        padding: 7px 10px;
+        font-size: .76rem;
+      }
+
+      .lightbox-meta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Photo dump</span>
+          <h1 id="album-title">Dorian Party Album</h1>
+          <p class="muted" id="album-subtitle">Loads from photos.json (works on static hosting), with optional auto-discovery fallback.</p>
+          <div class="actions">
+            <a class="btn" id="download-all" href="#" download>⬇ Download Full Album</a>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="hero-card">
+            <span class="mini-label">Album details</span>
+            <div class="stats">
+              <span class="pill" id="photo-count">0 photos</span>
+              <span class="pill" id="view-mode">Tap any photo to expand</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="gallery-wrap">
+      <section class="gallery" id="gallery" aria-live="polite"></section>
+    </section>
+  </main>
+
+  <aside class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-bar">
+      <a id="lightbox-download" href="#" download>Download</a>
+      <button type="button" id="lightbox-close">Close ✕</button>
+    </div>
+
+    <div class="lightbox-stage">
+      <img id="lightbox-image" alt="Expanded gallery image" />
+      <div class="lightbox-meta">
+        <p class="lightbox-caption" id="lightbox-caption">Photo</p>
+        <span class="muted">Click outside or press Esc to close</span>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+  const manifestPath = './photos.json';
+  const MAX_CONCURRENT_LOADS = 4;
+  const PRELOAD_ROOT_MARGIN = '500px 0px';
+
+  const formatName = (fileName) => fileName
+    .replace(/\.[^/.]+$/, '')
+    .replace(/[\-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const padNumber = (number, size) => String(number).padStart(size, '0');
+
+  const expandPattern = (pattern) => {
+    const photos = [];
+    const { prefix = '', start = 1, end = 1, pad = 1, ext = '.jpg', captionPrefix = '' } = pattern;
+    for (let i = start; i <= end; i++) {
+      const file = `${prefix}${padNumber(i, pad)}${ext}`;
+      photos.push({ file, caption: captionPrefix ? `${captionPrefix} ${i}` : undefined });
+    }
+    return photos;
+  };
+
+  const buildManifestPhotos = (albumMeta) => {
+    const explicit = Array.isArray(albumMeta.photos) ? albumMeta.photos : [];
+    const patterns = Array.isArray(albumMeta.patterns) ? albumMeta.patterns.flatMap(expandPattern) : [];
+    const dedup = new Map();
+
+    [...explicit, ...patterns].forEach((item) => {
+      if (!item || !item.file) return;
+      const key = String(item.file).toLowerCase();
+      if (!dedup.has(key)) dedup.set(key, item);
+    });
+
+    return [...dedup.values()];
+  };
+
+  const discoverJpgFiles = async (basePath) => {
+    const response = await fetch(basePath, { headers: { Accept: 'text/html' } });
+    if (!response.ok) throw new Error('Unable to read photos directory');
+
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const links = [...doc.querySelectorAll('a[href]')].map((a) => a.getAttribute('href') || '');
+
+    const files = links
+      .map((href) => {
+        try {
+          const url = new URL(href, window.location.href);
+          return decodeURIComponent(url.pathname.split('/').pop() || '');
+        } catch {
+          return '';
+        }
+      })
+      .filter((name) => /\.(jpg|jpeg)$/i.test(name))
+      .filter((name, index, arr) => name && arr.indexOf(name) === index)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+
+    return files.map((file) => ({ file }));
+  };
+
+  const escapeHtml = (value) =>
+    String(value).replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+
+  const renderGallery = (album) => {
+    const title = document.getElementById('album-title');
+    const subtitle = document.getElementById('album-subtitle');
+    const photoCount = document.getElementById('photo-count');
+    const gallery = document.getElementById('gallery');
+    const downloadAll = document.getElementById('download-all');
+
+    title.textContent = album.title || 'Dorian Party Album';
+    subtitle.textContent = album.subtitle || 'A clean, high-volume photo drop for everyone.';
+    photoCount.textContent = `${(album.photos || []).length.toLocaleString()} photos`;
+
+    downloadAll.href = album.downloadZip || '#';
+    downloadAll.style.pointerEvents = album.downloadZip ? 'auto' : 'none';
+    downloadAll.style.opacity = album.downloadZip ? '1' : '.55';
+
+    const base = album.imagesBasePath || './photos/';
+
+    const cards = (album.photos || []).map((item, index) => {
+      const src = `${base}${item.file}`;
+      const caption = item.caption || formatName(item.file) || `Photo ${index + 1}`;
+      const safeCaption = escapeHtml(caption);
+      const safeSrc = escapeHtml(src);
+
+      return `
+        <figure class="card">
+          <button type="button" data-src="${safeSrc}" data-caption="${safeCaption}" aria-label="Open ${safeCaption}">
+            <img
+              data-src="${safeSrc}"
+              alt="${safeCaption}"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="${index < 8 ? 'high' : 'low'}"
+            />
+          </button>
+          <figcaption class="meta">
+            <div class="caption-wrap">
+              <span class="caption-label">Photo ${index + 1}</span>
+              <p class="caption" title="${safeCaption}">${safeCaption}</p>
+            </div>
+            <a class="download" href="${safeSrc}" download>Download</a>
+          </figcaption>
+        </figure>
+      `;
+    }).join('');
+
+    gallery.innerHTML = cards || '<div class="empty"><p class="muted">No JPG files found in /photos/ yet.</p></div>';
+
+    setupProgressiveImageLoading(gallery);
+  };
+
+  const openLightbox = (src, caption) => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxDownload = document.getElementById('lightbox-download');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    lightboxImage.src = src;
+    lightboxImage.alt = caption;
+    lightboxDownload.href = src;
+    lightboxCaption.textContent = caption;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+  };
+
+  const closeLightbox = () => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('open')) return;
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+  };
+
+  function setupProgressiveImageLoading(gallery) {
+    const images = [...gallery.querySelectorAll('img[data-src]')];
+    const queue = [];
+    let activeLoads = 0;
+
+    const pumpQueue = () => {
+      while (activeLoads < MAX_CONCURRENT_LOADS && queue.length > 0) {
+        const img = queue.shift();
+        if (!img || img.dataset.loadingStarted === 'true') continue;
+
+        img.dataset.loadingStarted = 'true';
+        activeLoads++;
+
+        const temp = new Image();
+        temp.decoding = 'async';
+
+        temp.onload = () => {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          activeLoads--;
+          pumpQueue();
+        };
+
+        temp.onerror = () => {
+          const card = img.closest('.card');
+          if (card) card.style.display = 'none';
+          activeLoads--;
+          pumpQueue();
+        };
+
+        temp.src = img.dataset.src;
+      }
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      images.forEach((img) => queue.push(img));
+      pumpQueue();
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        observer.unobserve(img);
+        queue.push(img);
+        pumpQueue();
+      });
+    }, {
+      rootMargin: PRELOAD_ROOT_MARGIN
+    });
+
+    images.forEach((img) => observer.observe(img));
+  }
+
+  document.getElementById('gallery').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-src]');
+    if (!button) return;
+    openLightbox(button.dataset.src, button.dataset.caption || 'Photo');
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', (event) => {
+    if (event.target.id === 'lightbox') closeLightbox();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLightbox();
+  });
+
+  fetch(manifestPath)
+    .then((response) => response.ok ? response.json() : {})
+    .catch(() => ({}))
+    .then(async (albumMeta) => {
+      const imagesBasePath = albumMeta.imagesBasePath || './photos/';
+      const manifestPhotos = buildManifestPhotos(albumMeta);
+
+      if (manifestPhotos.length > 0) {
+        renderGallery({
+          ...albumMeta,
+          imagesBasePath,
+          subtitle: albumMeta.subtitle || 'Loaded from photos.json (best for static websites).',
+          photos: manifestPhotos
+        });
+        return;
+      }
+
+      try {
+        const photos = await discoverJpgFiles(imagesBasePath);
+        renderGallery({
+          ...albumMeta,
+          imagesBasePath,
+          subtitle: albumMeta.subtitle || 'Auto-loaded from JPG files in the photos folder.',
+          photos
+        });
+      } catch {
+        renderGallery({
+          ...albumMeta,
+          imagesBasePath,
+          subtitle: 'No manifest entries found, and auto-discovery is unavailable on this host. Add photos/patterns in photos.json.',
+          photos: []
+        });
+      }
+    });
+</script>
+</body>
+</html>
